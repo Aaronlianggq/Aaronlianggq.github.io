@@ -161,12 +161,9 @@
                  
                 var regStr_saf = /os [\d._]* like mac /gi ;
                 var verinfo = userAgent.match(regStr_saf) ;
-		alert(userAgent);
-		alert(verinfo);
                 if(verinfo){
                     var version = (verinfo+"").replace(/[^0-9|_.]/ig,"").replace(/_/ig,".");
-		    alert(version);
-                    if(version >= 11){
+                    if(parseFloat(version) >= 11){
                         return true;
                     }
                     alert('iOS11以下系统无需测试');
