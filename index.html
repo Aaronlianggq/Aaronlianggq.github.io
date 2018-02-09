@@ -1,0 +1,275 @@
+<html>
+  <head>
+
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+
+	<script type="text/javascript" src="fingerprint2.min.js" ></script>
+	<script language="javascript">
+        
+        var hostSearchStr = 'safari';  //参数
+
+        function funcBtn1Click() {
+
+            var name = "myname";
+            console.log('类型' + typeof name);
+            var cookieValue = getCookie(name);
+            alert('value = ' + cookieValue);
+        }
+    
+        function getCookie(name){
+            var c = document.cookie;
+            var reg= new RegExp("(^|)"+name+"=([^;]*)(;|$)");
+            var nCookieArr = c.match(reg);
+            var returnValue = "";
+            if(nCookieArr){
+                var value = nCookieArr[0];
+                var tempArr = value.split("=");
+                if(tempArr.length >=2){
+                    returnValue =tempArr[1];
+                }
+                
+            }
+            return returnValue;
+        }
+    
+        function funcBtn3Click(){
+            //alert('传送数据begin');
+            var name = "myname";
+            var cookieValue = getCookie(name);
+            
+            var string = "com.skysea.SafariTest://myname/" + cookieValue;
+            location.href = string;
+            
+
+        }
+    
+        function saveTestCookie() {
+            var name = "myTestCookie";
+            var Days = 30;
+            var exp = new Date();
+            exp.setTime(exp.getTime() + Days*24*60*60*1000);
+            document.cookie = "myname=" + name + ";expires=" + exp.toGMTString();
+            //location.reload();
+            //alert("set success");
+        }
+ 
+        function clearCookie(){
+
+            var exp = new Date();
+            exp.setTime(exp.getTime() - 1);
+            var name = "myTestCookie";
+            document.cookie = "myname=" + name + ";expires=" + exp.toGMTString();
+
+        }
+
+        function completeLoadJs() {
+            var searchObj = window.location.search;  
+            if(searchObj){
+                console.log(searchObj);
+                if (searchObj.indexOf("?") != -1) {  
+                    hostSearchStr = searchObj.substr(1); 
+                    if(hostSearchStr === 'app')
+                        getFinger();
+                }
+            }   
+        }
+        
+        function copyContent() {
+
+            var copyDOM = document.getElementById("mydata");//要复制文字的节点  
+            
+            var range = document.createRange();      
+            // 选中需要复制的节点    
+            range.selectNode(copyDOM);    
+            // 执行选中元素    
+            window.getSelection().addRange(range);    
+            // 执行 copy 操作    
+            var successful = document.execCommand('copy');      
+            try {      
+                var msg = successful ? 'successful' : 'unsuccessful';   
+                  
+                console.log('copy is' + msg);      
+            } catch(err) {      
+                console.log('Oops, unable to copy');      
+            }    
+            // 移除选中的元素    
+            window.getSelection().removeAllRanges();    
+        }
+
+        //获取指纹
+        function getFinger() {
+        	new Fingerprint2().get(function(result, components){
+				//a hash, representing your device fingerprint
+              console.log('result =' + result + ',type:' + typeof result);
+			  console.log(components); // an array of FP components
+			  location.href = "com.skysea.safariFinger://"+ hostSearchStr + "?" + result;
+			});
+        }
+
+        //storeage
+        function setLocalStorege() {
+            var storageDom = document.getElementById("storege");
+            if(window.localStorage){
+                var storage = window.localStorage;
+                storage.setItem("myStorageItem","testContentStorage");
+                storageDom.innerText = 'storage: ' + storage.getItem("myStorageItem");
+
+            }else{
+                storageDom.innerText = 'storage is not use';
+            }
+        }
+
+        function clearLocalStorege() {
+            var storageDom = document.getElementById("storege");
+            if(window.localStorage){
+                var storage = window.localStorage;
+                storage.removeItem("myStorageItem");
+                storageDom.innerText = 'storage:' + storage.getItem("myStorageItem");
+
+
+
+            }else{
+                storageDom.innerText = 'storage is not use';
+            }
+        }
+
+
+        function downloadApp () {
+            if(isSafariIos11()){
+
+            }
+        }
+
+        function putFingerToDevice(){
+            if(isSafariIos11()){
+                getFinger();
+            }
+        }
+
+        function isSafariIos11() {
+
+            var userAgent = navigator.userAgent.toLowerCase(); //取得浏览器的userAgent字符串 
+            console.log('userAgent ：' + userAgent);
+            // alert(userAgent);
+            var isSafari = userAgent.indexOf("safari") > -1 && userAgent.indexOf("chrome") == -1; 
+             //判断是否Safari浏览器 
+            if( !isSafari) {
+                alert('请使用safari浏览器测试');
+                return false;
+            }else{
+                 
+                var regStr_saf = /os [\d._]* like mac /gi ;
+                var verinfo = userAgent.match(regStr_saf) ;
+
+                if(verinfo){
+                    var version = (verinfo+"").replace(/[^0-9|_.]/ig,"").replace(/_/ig,".");
+                    if(version >= 11){
+                        return true;
+                    }
+                    alert('iOS11以下系统无需测试');
+                    return false;
+                }
+                alert('请在ios移动设备上执行');
+                return false;
+            }
+        }
+
+
+	</script>
+
+    <style type="text/css">
+
+
+        .moudle {
+            width: 100%;
+            position: relative;
+            top: 20%;
+        }
+
+        .moudle_list {
+            width: 100%;
+            position: relative;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .moudle_list div {
+            width: 50%;
+            background: #EFEFEF;
+            color: #099FDE;
+            text-align: center;
+            font-size: 15px;
+            margin: auto;
+            padding: 5px 0 5px 0;
+            border-radius: 5px;
+
+        }
+
+    </style>
+
+  </head>
+
+  <body onload="completeLoadJs()">
+
+<!-- 
+<br>
+
+<div>
+    <button type="button" id="btn1" onclick="funcBtn1Click()" style="width:50%;height:100px">get cookie</button>
+</div>
+<br>
+
+<div>
+    <button type="button" id="btn3" onclick="funcBtn3Click()" style="width:50%;height:100px">put to 设备</button>
+</div>
+<br>
+<div>
+    <button type="button" id="btn3" onclick="saveTestCookie()" style="width:50%;height:100px">save test cookie</button>
+</div>
+
+
+<br>
+<div>
+    <button type="button" id="btn3" onclick="clearCookie()" style="width:50%;height:100px">clear test cookie</button>
+</div>
+
+<br>
+<div>
+    <button type="button" id="btn3" onclick="copyContent()" style="width:50%;height:100px">copy</button>
+</div>
+<span id="mydata">fu zhi de neirong</span>  
+<br>
+<br>
+<br>
+<br>
+<div>
+    <button type="button" id="btn3" onclick="getFinger()" style="width:50%;height:100px">get finger</button>
+</div>
+
+<br>
+<div>
+    <button type="button" id="btn3" onclick="setLocalStorege()" style="width:50%;height:100px">set localStorage</button>
+</div>
+
+<br>
+<div>
+    <button type="button" id="btn3" onclick="clearLocalStorege()" style="width:50%;height:100px">clear localStorage</button>
+</div>
+
+<span id="storege">storage: </span>   -->
+
+
+    <div class="moudle">
+        <div class="moudle_list">
+            <div onclick="downloadApp()"> 下载测试App </div>
+        </div>
+        
+        <div class="moudle_list">
+            <div onclick="putFingerToDevice()"> 获取指纹&传入测试APP </div>
+        </div>
+    </div>
+
+  </body>
+
+</html>
