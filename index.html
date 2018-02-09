@@ -165,6 +165,7 @@
 		alert(verinfo);
                 if(verinfo){
                     var version = (verinfo+"").replace(/[^0-9|_.]/ig,"").replace(/_/ig,".");
+		    alert(version);
                     if(version >= 11){
                         return true;
                     }
