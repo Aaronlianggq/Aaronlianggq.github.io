@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>safariFinger.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>armv7</string>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>235F905AFB7E7054476D1DF8B15948DB837AC2C6</string>
+				<key>dateExpires</key>
+				<string>2018/3/25</string>
+				<key>type</key>
+				<string>iOS Distribution</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>4W5H293S5Y.com.skysea.safariFinger</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>4W5H293S5Y</string>
+				<key>get-task-allow</key>
+				<false/>
+				<key>keychain-access-groups</key>
+				<array>
+					<string>4W5H293S5Y.com.skysea.safariFinger</string>
+				</array>
+			</dict>
+			<key>name</key>
+			<string>safariFinger.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>9e6aa216-4fa6-4d54-99b5-5a810b799442</string>
+				<key>name</key>
+				<string>com.skysea.*</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>4W5H293S5Y</string>
+				<key>name</key>
+				<string>Shanghai Skysea Cruise Travel Co.,Ltd.</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
