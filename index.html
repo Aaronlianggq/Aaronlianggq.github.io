@@ -161,7 +161,7 @@
                  
                 var regStr_saf = /os [\d._]* like mac /gi ;
                 var verinfo = userAgent.match(regStr_saf) ;
-
+		alert(userAgent);
                 if(verinfo){
                     var version = (verinfo+"").replace(/[^0-9|_.]/ig,"").replace(/_/ig,".");
                     if(version >= 11){
