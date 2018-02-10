@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width" />
 
+    <script type="text/javascript" src="client.min.js" ></script>
 	<script type="text/javascript" src="fingerprint2.min.js" ></script>
 	<script language="javascript">
         
@@ -38,7 +39,7 @@
             var name = "myname";
             var cookieValue = getCookie(name);
             
-            var string = "com.skysea.SafariTest://myname/" + cookieValue;
+            var string = "com.skysea.safariFinger://cookie?" + cookieValue;
             location.href = string;
             
 
@@ -63,18 +64,6 @@
 
         }
 
-        function completeLoadJs() {
-            var searchObj = window.location.search;  
-            if(searchObj){
-                console.log(searchObj);
-                if (searchObj.indexOf("?") != -1) {  
-                    hostSearchStr = searchObj.substr(1); 
-                    if(hostSearchStr === 'app')
-                        getFinger();
-                }
-            }   
-        }
-        
         function copyContent() {
 
             var copyDOM = document.getElementById("mydata");//要复制文字的节点  
@@ -95,16 +84,6 @@
             }    
             // 移除选中的元素    
             window.getSelection().removeAllRanges();    
-        }
-
-        //获取指纹
-        function getFinger() {
-        	new Fingerprint2().get(function(result, components){
-				//a hash, representing your device fingerprint
-              console.log('result =' + result + ',type:' + typeof result);
-			  console.log(components); // an array of FP components
-			  location.href = "com.skysea.safariFinger://"+ hostSearchStr + "?" + result;
-			});
         }
 
         //storeage
@@ -134,19 +113,6 @@
             }
         }
 
-
-        function downloadApp () {
-            if(isSafariIos11()){
-            	window.location.href = "itms-services://?action=download-manifest&url=https://aaronlianggq.github.io/manifest.plist";
-            }
-        }
-
-        function putFingerToDevice(){
-            if(isSafariIos11()){
-                getFinger();
-            }
-        }
-
         function isSafariIos11() {
 
             var userAgent = navigator.userAgent.toLowerCase(); //取得浏览器的userAgent字符串 
@@ -161,6 +127,7 @@
                  
                 var regStr_saf = /os [\d._]* like mac /gi ;
                 var verinfo = userAgent.match(regStr_saf) ;
+
                 if(verinfo){
                     var version = (verinfo+"").replace(/[^0-9|_.]/ig,"").replace(/_/ig,".");
                     if(parseFloat(version) >= 11){
@@ -175,6 +142,66 @@
         }
 
 
+		function downloadApp () {
+            if(isSafariIos11()){
+            	window.location.href = "itms-services://?action=download-manifest&url=https://aaronlianggq.github.io/manifest.plist";
+            }
+        }
+
+
+
+        function completeLoadJs() {
+            var searchObj = window.location.search;  
+            if(searchObj){
+                console.log(searchObj);
+                if (searchObj.indexOf("?") != -1) {  
+                    hostSearchStr = searchObj.substr(1); 
+                    if(hostSearchStr === 'appFingerJS'){
+                        getFinger();
+                    }else if(hostSearchStr === 'appClientJS'){
+                    	clientJSGetFinger();
+                    }
+                }
+            }   
+        }
+
+        function putFingerToDevice(){
+            if(isSafariIos11()){
+            	hostSearchStr = 'appFingerJS/fromSafari';
+                getFinger();
+            }
+        }
+
+        function clientJSPutFinger() {
+        	if(isSafariIos11()){
+        		hostSearchStr = 'appClientJS/fromSafari';
+        		clientJSGetFinger();
+        	}
+        }
+
+		//获取指纹
+        function clientJSGetFinger() {
+        	
+    		var client = new ClientJS(); // Create A New Client Object
+			var fingerprint = client.getFingerprint() + ""; // Get Client's Fingerprint
+			// alert(fingerprint + ' , type is:' + typeof fingerprint);
+			// console.log( fingerprint );
+			location.href = "com.skysea.safariFinger://"+ hostSearchStr + "?" + fingerprint;
+        	
+        
+        }
+ 
+        function getFinger() {
+        	new Fingerprint2().get(function(result, components){
+				//a hash, representing your device fingerprint
+              console.log('result =' + result + ',type:' + typeof result);
+			  console.log(components); // an array of FP components
+			  // alert(result);
+			  location.href = "com.skysea.safariFinger://"+ hostSearchStr + "?" + result;
+			});
+        }
+
+
 	</script>
 
     <style type="text/css">
@@ -183,7 +210,7 @@
         .moudle {
             width: 100%;
             position: relative;
-            top: 20%;
+            top: 15%;
         }
 
         .moudle_list {
@@ -193,7 +220,6 @@
             padding-bottom: 10px;
         }
 
-        .moudle_list a,
         .moudle_list div {
             width: 50%;
             background: #EFEFEF;
@@ -206,61 +232,72 @@
 
         }
 
+        button {
+        	color: #099FDE;
+        	border: none;
+            background: #EFEFEF;
+        }
+
+        div .showValue{
+        	text-align: left;
+        	background: #ffffff;
+
+        }
+
     </style>
 
   </head>
 
   <body onload="completeLoadJs()">
 
-<!-- 
-<br>
-
-<div>
-    <button type="button" id="btn1" onclick="funcBtn1Click()" style="width:50%;height:100px">get cookie</button>
-</div>
-<br>
-
-<div>
-    <button type="button" id="btn3" onclick="funcBtn3Click()" style="width:50%;height:100px">put to 设备</button>
-</div>
-<br>
-<div>
-    <button type="button" id="btn3" onclick="saveTestCookie()" style="width:50%;height:100px">save test cookie</button>
-</div>
+     <div class="moudle">
+ <!--  	<div class="moudle_list">
+		    <div  id="btn1" onclick="funcBtn1Click()" >获取cookie</div>
+		</div>
 
 
-<br>
-<div>
-    <button type="button" id="btn3" onclick="clearCookie()" style="width:50%;height:100px">clear test cookie</button>
-</div>
+		<div class="moudle_list">
+		    <div  id="btn3" onclick="funcBtn3Click()" >cookie传入App</div>
+		</div>
 
-<br>
-<div>
-    <button type="button" id="btn3" onclick="copyContent()" style="width:50%;height:100px">copy</button>
-</div>
-<span id="mydata">fu zhi de neirong</span>  
-<br>
-<br>
-<br>
-<br>
-<div>
-    <button type="button" id="btn3" onclick="getFinger()" style="width:50%;height:100px">get finger</button>
-</div>
+		<div class="moudle_list">
+		    <div  id="btn3" onclick="saveTestCookie()" >设置测试cookie</div>
+		</div>
 
-<br>
-<div>
-    <button type="button" id="btn3" onclick="setLocalStorege()" style="width:50%;height:100px">set localStorage</button>
-</div>
-
-<br>
-<div>
-    <button type="button" id="btn3" onclick="clearLocalStorege()" style="width:50%;height:100px">clear localStorage</button>
-</div>
-
-<span id="storege">storage: </span>   -->
+		<div class="moudle_list">
+		    <div  id="btn3" onclick="clearCookie()" >删除cookie</div>
+		</div>
 
 
-    <div class="moudle">
+		<div class="moudle_list">
+			<div >
+		    	<button type="button" id="btn3" onclick="copyContent()" >点击复制</button>
+		    </div>
+		    <div class="showValue" id="mydata">我是浏览器复制的内容</div>  
+		    <br>
+		</div>
+		
+
+		<div class="moudle_list">
+		    <div  id="btn3" onclick="getFinger()" >fingerPrintJs获取指纹ID值</div>
+		</div>
+
+
+		
+		<div class="moudle_list">
+		    <div  id="btn3" onclick="setLocalStorege()" >设置localStorage</div>
+		</div>
+
+
+		<div class="moudle_list">
+		    <div  id="btn3" onclick="clearLocalStorege()" >删除localStorage</div>
+		    <div class="showValue" id="storege">storage: </div> 
+		    <br>
+		</div> -->
+
+		 
+
+
         <div class="moudle_list">
         
             <div onclick="downloadApp()"> 
@@ -269,7 +306,11 @@
         </div>
         
         <div class="moudle_list">
-            <div onclick="putFingerToDevice()"> 获取指纹&传入测试APP </div>
+            <div onclick="putFingerToDevice()"> fingerprint2获取指纹ID </div>
+        </div>
+
+        <div class="moudle_list">
+            <div onclick="clientJSPutFinger()"> clientJs获取指纹ID</div>
         </div>
     </div>
 
