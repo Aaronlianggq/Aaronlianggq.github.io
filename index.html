@@ -144,9 +144,12 @@
         }
 
 
-		function downloadApp () {
-            if(isSafariIos11()){
-            	window.location.href = "itms-services://?action=download-manifest&url=https://aaronlianggq.github.io/manifest.plist";
+	function downloadApp () {
+            var client = new ClientJS();
+            if( client.isMobileIOS()){
+                window.location.href = "itms-services://?action=download-manifest&url=https://aaronlianggq.github.io/manifest.plist";
+            }else{
+                alert('请在ios移动设备上执行');
             }
         }
 
