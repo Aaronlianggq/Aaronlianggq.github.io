@@ -153,6 +153,18 @@
 
 
         function completeLoadJs() {
+
+            var userAgent = navigator.userAgent.toLowerCase(); //取得浏览器的userAgent字符串 
+            console.log('userAgent ：' + userAgent);
+            // alert(userAgent);
+            var isSafari = userAgent.indexOf("safari") > -1 && userAgent.indexOf("chrome") == -1; 
+             //判断是否Safari浏览器 
+            if( !isSafari) {
+                document.getElementById("getfingerID").style.display="none";//隐藏
+                document.getElementById("fingerTable").style.display="none";//隐藏
+            }
+
+
             var searchObj = window.location.search;  
             if(searchObj){
                 console.log(searchObj);
@@ -180,8 +192,7 @@
             					storageDom.innerText = vs[1];
    							}
 						}
-                    	clientJSGetFinger();
-			getFinger();
+                    	showFinger();
 
                     }
                 }
@@ -224,10 +235,9 @@
         }
 
         function showFinger(){
-		if(isSafariIos11()){
-			clientJSGetFinger();
-			getFinger();
-		}
+
+        	clientJSGetFinger();
+        	getFinger();
 
         }
 
@@ -280,7 +290,7 @@
         }
 
         .moudle_list div {
-            width: 80%;
+            width: 50%;
             background: #EFEFEF;
             color: #099FDE;
             text-align: center;
@@ -300,6 +310,7 @@
         td,th {
         	WORD-WRAP: break-word;
         	width: 33%;
+
 
         }
 
@@ -364,11 +375,11 @@
             </div>
         </div>
         
-        <div class="moudle_list">
+        <div id="getfingerID" class="moudle_list">
             <div onclick="showFinger()"> safari获取指纹ID </div>
         </div>
 
-        <div class="moudle_list">
+        <div id="fingerTable" class="moudle_list">
 
         	<div style="background: #ffffff;">
         		
