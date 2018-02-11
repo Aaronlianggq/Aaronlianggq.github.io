@@ -4,6 +4,8 @@
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width" />
 
+    <link rel="stylesheet" href="bootstrap.min.css" charset="UTF-8">  
+
     <script type="text/javascript" src="client.min.js" ></script>
 	<script type="text/javascript" src="fingerprint2.min.js" ></script>
 	<script language="javascript">
@@ -250,7 +252,7 @@
 			  var storageDom = document.getElementById("finger");
 
               storageDom.innerText = result;
-              
+
               compareTypeValues();
 
 			});
@@ -366,10 +368,10 @@
 
         <div class="moudle_list">
 
-        	<div>
+        	<div style="background: #ffffff;">
         		
 
-        		<table  width="100%" style="color: #099FDE;TABLE-LAYOUT: fixed" border="1" >
+        		<table  class="table table-bordered" width="100%" style="color: #099FDE;TABLE-LAYOUT: fixed;"  >
 				  <tr>
 				    <th ></th>
 				    <th >指纹算法一</th>
