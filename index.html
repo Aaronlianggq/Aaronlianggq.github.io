@@ -180,7 +180,8 @@
             					storageDom.innerText = vs[1];
    							}
 						}
-                    	showFinger();
+                    	clientJSGetFinger();
+			getFinger();
 
                     }
                 }
@@ -223,9 +224,10 @@
         }
 
         function showFinger(){
-
-        	clientJSGetFinger();
-        	getFinger();
+		if(isSafariIos11()){
+			clientJSGetFinger();
+			getFinger();
+		}
 
         }
 
@@ -378,7 +380,7 @@
 				    <th >指纹算法二</th>
 				  </tr>
 				  <tr>
-				    <th >safari获取值</th>
+				    <th >获取值</th>
 				    <th  id="finger"  style="color:#FF3333"></th>
 				    <th  id="client"  style="color:#FF3333"></th>
 				  </tr>
