@@ -8,9 +8,16 @@
 
     <script type="text/javascript" src="client.min.js" ></script>
 	<script type="text/javascript" src="fingerprint2.min.js" ></script>
+        <script type="text/javascript" src="base64.js" ></script>
 	<script language="javascript">
         
         var hostSearchStr = 'safari';  //参数
+
+        var fingerComponents = null;
+        var clientjsComponents = null;
+
+        var appfingerComponents = null;
+        var appclientjsComponents = null;
 
         function funcBtn1Click() {
 
@@ -144,13 +151,15 @@
         }
 
 
-	function downloadApp () {
+		function downloadApp () {
+
             var client = new ClientJS();
             if( client.isMobileIOS()){
                 window.location.href = "itms-services://?action=download-manifest&url=https://aaronlianggq.github.io/manifest.plist";
             }else{
                 alert('请在ios移动设备上执行');
             }
+            
         }
 
 
@@ -193,7 +202,11 @@
    							}else if (vs[0] === 'appFingerJS') {
    								var storageDom = document.getElementById("appfinger");
             					storageDom.innerText = vs[1];
-   							}
+   							}else if (vs[0] === 'appClientJSComponents') {
+                                appclientjsComponents = JSON.parse(vs[1]);
+                            }else if (vs[0] === 'appFingerJSComponents') {
+                                appfingerComponents = JSON.parse(vs[1]);
+                            }
 						}
                     	showFinger();
 
@@ -228,10 +241,16 @@
         	var client = new ClientJS(); // Create A New Client Object
 			var clientJSFinger = client.getFingerprint() + ""; // Get Client's Fingerprint
 
+            appclientjsComponents = client.getFingerprintComponent();
+
 			new Fingerprint2().get(function(result, components){
 				//a hash, representing your device fingerprint
-				var query = "appFingerJS="+result + "&appClientJS=" + clientJSFinger
-			  // alert(result);
+
+                appfingerComponents = components;
+            var b = new Base64();  
+
+				var query = "appFingerJS="+result + "&appClientJS=" + clientJSFinger + "&appFingerJSComponents=" + b.encode(JSON.stringify(appfingerComponents)) + "&appClientJSComponents=" + b.encode(JSON.stringify(appclientjsComponents))
+			  // alert(query);
 			  	location.href = "com.skysea.safariFinger://"+ hostSearchStr + "?" + query;
 			});
 
@@ -244,14 +263,13 @@
 
         }
 
-
 		//获取指纹
         function clientJSGetFinger() {
         	
     		var client = new ClientJS(); // Create A New Client Object
 			var fingerprint = client.getFingerprint() + ""; // Get Client's Fingerprint
 
-			
+			clientjsComponents = client.getFingerprintComponent();
         	var storageDom = document.getElementById("client");
 
             storageDom.innerText = fingerprint;
@@ -263,6 +281,8 @@
 				//a hash, representing your device fingerprint
               console.log('result =' + result + ',type:' + typeof result);
 			  console.log(components); // an array of FP components
+
+              fingerComponents = components;
 			  // alert(result);
 			  var storageDom = document.getElementById("finger");
 
@@ -274,6 +294,41 @@
         }
 
 
+        function showFingerDetail(){
+
+            alert(JSON.stringify(fingerComponents));
+
+        }
+        function showClientJSDetail(){
+
+            alert(JSON.stringify(clientjsComponents));
+
+        }
+
+        function showAppFingerDetail(){
+
+            alert(JSON.stringify(appfingerComponents));
+
+        }
+        function showAppClientJSDetail(){
+
+            alert(JSON.stringify(appclientjsComponents));
+
+        }
+
+        function goToApp(){
+            
+            var clientDom = document.getElementById("client");
+            var finger= document.getElementById("finger");
+            
+            var b = new Base64();  
+
+            var query = "appFingerJS="+finger.innerText + "&appClientJS=" + clientDom.innerText+ "&appFingerJSComponents=" + b.encode(JSON.stringify(fingerComponents)) + "&appClientJSComponents=" + b.encode(JSON.stringify(clientjsComponents))
+
+            var string = "com.skysea.safariFinger://test?" + query;
+            window.location.href = string;
+
+        }
 	</script>
 
     <style type="text/css">
@@ -382,6 +437,10 @@
             <div onclick="showFinger()"> safari获取指纹ID </div>
         </div>
 
+        <div id="getfingerID" class="moudle_list">
+            <div onclick="goToApp()"> 打开app详细比较 </div>
+        </div>
+
         <div id="fingerTable" class="moudle_list">
 
         	<div style="background: #ffffff;">
@@ -395,13 +454,13 @@
 				  </tr>
 				  <tr>
 				    <th >safari获取值</th>
-				    <th  id="finger"  style="color:#FF3333"></th>
-				    <th  id="client"  style="color:#FF3333"></th>
+				    <th  id="finger"  style="color:#FF3333" onclick="showFingerDetail()"></th>
+				    <th  id="client"  style="color:#FF3333" onclick="showClientJSDetail()"></th>
 				  </tr>
 				  <tr id="appValueTr" style="display:none">
 				    <th >app传入值</th>
-				    <th  id="appfinger" style="color:#FF3333"></th>
-				    <th  id="appclient" style="color:#FF3333"></th>
+				    <th  id="appfinger" style="color:#FF3333" onclick="showAppFingerDetail()"></th>
+				    <th  id="appclient" style="color:#FF3333" onclick="showAppClientJSDetail()"></th>
 				  </tr>
 				  <tr id="reusltTr" style="display:none">
 				    <th >比较结果</th>
