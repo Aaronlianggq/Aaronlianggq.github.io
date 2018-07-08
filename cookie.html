@@ -1,0 +1,158 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>wechat</title>
+    <meta charset="UTF-8">
+    
+    <meta name="viewport" content="width=device-width" />
+    <script language="javascript">
+
+        let localCookieName = 'localCookie'
+
+        function loadLuanch(){
+            showCookie()
+        }
+
+        function setLocalCookie() {
+            var Days = 30;
+            var exp = new Date();
+            exp.setTime(exp.getTime() + Days*24*60*60*1000);
+            document.cookie = localCookieName +"=localCookieValue;expires=" + exp.toGMTString();
+            showCookie()
+        }
+ 
+        function getServerCookie(){
+            
+            if(window.XMLHttpRequest){
+                var re = new XMLHttpRequest()
+                re.open('GET','http://10.38.140.80:5389/');
+                re.onreadystatechange = function(){
+                    if(re.readyState === 4 && re.status === 200){            
+                        var allResHeaders = re.getAllResponseHeaders()
+                        var contentType  = re.getResponseHeader('content-type')
+                        console.log(allResHeaders)
+
+                        var val = new Function(re.responseText + '')
+                        val()
+
+
+                        showCookie()
+                    }
+                };
+                re.send(null);
+            }else{
+                console.log('no XMLHttpRequest')
+            }
+
+        }
+
+        function clearLocalCookie(){
+            clearCookieName(localCookieName)
+            showCookie()
+        }
+        
+        function clearServerCookie() {  
+            clearCookieName('serverGetCookieTwo')
+            clearCookieName('serverGetCookieOne')
+            showCookie() 
+        }  
+
+        function clearCookieName(cname){
+            var exp = new Date();
+            exp.setTime(exp.getTime() - 1);
+            document.cookie = cname + "=;expires=" + exp.toGMTString()
+        }
+
+        function showCookie(){
+            var c = document.cookie;
+            document.getElementById("btn4").innerHTML = c
+        }
+
+    </script>
+    <style type="text/css">
+
+
+        .moudle {
+            width: 100%;
+            position: relative;
+            top: 5%;
+        }
+
+        .moudle_list {
+            width: 100%;
+            position: relative;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .moudle_list div {
+            width: 80%;
+            background: #EFEFEF;
+            color: #099FDE;
+            text-align: center;
+            font-size: 15px;
+            margin: auto;
+            padding: 5px 0 5px 0;
+            border-radius: 5px;
+
+        }
+
+        button {
+          color: #099FDE;
+          border: none;
+            background: #EFEFEF;
+        }
+
+
+    </style>
+</head>
+<body onload="loadLuanch()">
+    <div class="moudle_list">
+        <div  id="btn1" onclick="setLocalCookie()" >设置本地cookie</div>
+        <br>
+    </div>
+     <div class="moudle_list">
+        <div  id="btn3" onclick="getServerCookie()" >获取服务cookie</div>
+        <br>
+    </div>
+    <div class="moudle_list">
+        <div  id="btn2" onclick="clearLocalCookie()" >清除本地cookie</div>
+        <br>
+    </div>
+    <div class="moudle_list">
+        <div  id="btn2" onclick="clearServerCookie()" >清除服务cookie</div>
+        <br>
+    </div>
+
+<!--     <div class="moudle_list">
+        <div  id="btn5" onclick="showCookie()" >显示所有cookie</div>
+        <br>
+    </div> -->
+
+
+    <div class="moudle_list">
+        <div>cookie值： </div>
+        <div  id="btn4"  ></div>
+        <br>
+    </div>  
+
+
+
+</body>
+</html>
