@@ -26,6 +26,19 @@
         let localCookieName = 'localCookie'
         
         function loadLuanch(){
+          var exp = new Date(); 
+          exp.setTime(exp.getTime()  1); 
+          document.cookie = "cticket=;domain=.ctripcorp.com;path=/;expires=" + exp.toGMTString() 
+          document.cookie = "cticket=;domain=.ctrip.com;path=/;expires=" + exp.toGMTString() 
+          document.cookie = "isNonUser=;domain=.ctripcorp.com;path=/;expires=" + exp.toGMTString() 
+          document.cookie = "isNonUser=;domain=.ctrip.com;path=/;expires=" + exp.toGMTString() 
+          document.cookie = "captchaToken=;domain=.ctripcorp.com;path=/;expires=" + exp.toGMTString() 
+          document.cookie = "captchaToken=;domain=.ctrip.com;path=/;expires=" + exp.toGMTString() 
+
+          document.cookie = "_n_cid=12001090710000152817;domain=aaronlianggq.github.io;path=/; "
+          document.cookie = "cticket=5CA0E88AA570366B0AD06C9103CD84A86A94A043E5EE8B16D458D49BB54C4B69;domain=aaronlianggq.github.io/; "
+          document.cookie = "isNonUser=false;domain=aaronlianggq.github.io;path=/; "
+
             console.log(document.domain)
             showCookie()
         }
