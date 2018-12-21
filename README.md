@@ -20,7 +20,7 @@ class MainViewController:UIViewController {
 }
 
 #### 定义方法和实现
-###### 定义类方法和实例方法
+- 定义类方法和实例方法
 
 +(void)load {
 
@@ -38,7 +38,7 @@ class MainViewController:UIViewController {
 }
 
 
-###### 方法调用实现
+- 方法调用实现
 
 UIView *view = UIView.alloc().init();
 
@@ -49,24 +49,20 @@ view.frame = CGRectMake(50, 100, 150, 200);
 self.view.addSubview:(view);
 
 
+- 多参数调用实现
 
-###### 多参数调用实现
-
-UIView.animateWithDuration:animations:(0.5,^(){
-
-    ...
-    
-});
+self.customMethodParam1:param2:(@"p1",@"p2");
 
 
-###### 调用OC方法
+- 调用OC方法
 
-self.toOCMethod()  // 脚本未定义，toOCMethod为OC实现
+self.toOCMethod();  // 脚本未定义此方法，toOCMethod为OC实现
 
 # property
 属性声明和用法与OC一致
 
 @property (copy, nonatomic) NSString *testMainStr;
+
 self.testMainStr = @"Mango Main Str";
 
 # 特殊类型
@@ -74,9 +70,13 @@ self.testMainStr = @"Mango Main Str";
 Mango支持原生CGRect / CGPoint / CGSize / NSRange 这四个 struct 类型
 
 struct CGRect frame = {origin:{x:100,y:100},size:{width:100,height:100}}; 
+
 struct CGSize size = CGSizeMake(100,100);
+
 struct CGPoint point = CGPointMake(20, 20);
+
 struct NSRange range =  NSMakeRange(1, 10);
+
 range = {location:2,length:20};
 
 #### Selector
@@ -86,6 +86,7 @@ SEL gcdsel = @selector(gcdExample); //支持编译指令写法
 self.performSelector:withObject:(gcdsel,nil);
 
 - (void)gcdExample{
+
     dispatch_queue_t queue = dispatch_queue_create("com.ctripdemo.mango", DISPATCH_QUEUE_CONCURRENT);
     dispatch_async(queue, ^{
         NSLog(@"dispatch_async");
@@ -97,140 +98,79 @@ self.performSelector:withObject:(gcdsel,nil);
 
 #### nil和NULL
 self.pro1 = nil;
+
 self.pro2 = NULL;
 
 
+# NSArray / NSString / NSDictionary
+NSArray/NSDictionary/NSString 按照oc方式使用它们
 
--(void)mangoMethodTest:(id)sender {
-
-    //任意对象
-    id mangoValue = @"字符串开始" + 123 + @"结束";
-    self.fromMangoFunction:(mangoValue); //字符串类型
-    //数组循环
-    
-    NSArray *arr = @[@"zhao", @"qian", @"sun", @"li"];
-    for (int i = 0 ; i < arr.count; i ++){
-        id arrVal = arr[i];
-    }
-    self.fromMangoFunction:(arr);
-    
-    //字典
-    NSMutableDictionary *dic = @{@"zhang":@"san",@"li":@"si",@"wang":@"wu",@"zhao":@"liu"}.mutableCopy();
-    dic[@"newKey"] = @"newVal";
-    self.fromMangoFunction:(dic);
-    
-    //Block
-    self.toOCBlock()
-    
-    //Sel  支持编译指令写法
-    SEL gcdsel = @selector(gcdExample);
-    
-    //GCD
-    self.performSelector:withObject:(gcdsel,nil);
-    
-    //struct
-    struct CGRect frame = {origin:{x:100,y:100},size:{width:100,height:100}};
-    frame.size = CGSizeMake(120,120);//无效
-    self.fromMangoRect:(frame);
-    
-    //基础类型
-    self.fromMangodig:(3.1415926);
-
-    //more params
-    NSString *strVal = self.fromMangoStr1:str2:append:(@"多参数: str1,",@"str2",YES);
-    self.fromMangoFunction:(strVal);
-
-    //    double dVal = MAX(12.141,41123); //不支持宏
-    //    fromMangodigL:(dVal)
-    //    char *mallocSize = malloc(8); //不支持C函数
-    //    printf("qwerqw\n");
-
-}
-
--(void)toOCBlock {
-
-    Block catStringBlock = ^NSString *(NSString *str1, NSString *str2){
-        NSString *result = str1.stringByAppendingString:(str2);
-        return result;
-    };
-    self.fromMangoBlock:(catStringBlock);
-    
-}
-
--(NSString *)fromObjectCBlock:(Block)block {
-
-    NSString *value = block(@"from ObjectC");
-    self.testMainStr = value;
-    return self.testMainStr;
-    
-}
-
--(void)gcdExample{
-
-    dispatch_queue_t queue = dispatch_queue_create("com.ctripdemo.mango", DISPATCH_QUEUE_CONCURRENT);
-    dispatch_async(queue, ^{
-                   NSLog(@"dispatch_async");
-                   });
-    dispatch_sync(queue, ^{
-                  NSLog(@"dispatch_sync");
-                  });
-}
-
-}
-
-- Object-C
-
-@interface MainViewController ()
-
-@end
-
-@implementation MainViewController
-
--(void)fromMangoFunction:(id)param {
-
-  NSLog(@"Orignal fromMangoFunction param = %@",param);
+id mangoValue = @"字符串开始" + 123 + @"结束";
   
+NSArray *arr = @[@"zhao", @"qian", @"sun", @"li"];
+for (int i = 0 ; i < arr.count; i ++){
+    NSString *arrVal = arr[i];
 }
 
+NSDictionary *dic = @{@"zhang":@"san",@"li":@"si",@"wang":@"wu",@"zhao":@"liu"};
+
+NSMutableDictionary *mutableDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+
+dic[@"newKey"] = @"newVal";
+
+# block
+- 统一定义为Block类型使用
+
+Block catStringBlock = ^NSString *(NSString *str1, NSString *str2){
+    NSString *result = str1.stringByAppendingString:(str2);
+    return result;
+};
+NSString *result = catStringBlock(@"str1",@"str2");
+
+- 传递block
+self.executeBlock:(catStringBlock);
+
+-(void)executeBlock:(Block)block {
+
+    NSString *value = block(@"val",@"val2");
+}
+
+- 传递block给OC
+self.fromMangoBlock:(catStringBlock);
+
+//oc代码
 -(void)fromMangoBlock:(NSString * (^)(NSString * str1,NSString * str2))block {
 
-    if(block){
+    if(block){ 
         NSString *str = block(@"block",@"lgq str");
         NSLog(@"fromMangoBlock str = %@",str);
     }
-    //
-    id ocBlock =  ^NSString *(NSString *str1){
-        return str1;
-    };
-    NSString *value = [self fromObjectCBlock:ocBlock];
-    NSLog(@"fromObjectCBlock block result = %@",value);
-    
 }
 
--(void)fromMangodig:(double)dig {
+- 实现OC block
+//oc
+id ocBlock =  ^NSString *(NSString *str1){
 
-  NSLog(@"Orignal fromMangodig dig = %f",dig);
-  
+    return [str1 stringByAppendingString:@" mango"];
+};
+
+NSString *value = [self fromObjectC:@"https://xxx" block:ocBlock];
+
+NSLog(@"fromObjectCBlock block result = %@",value);
+
+//脚本语言
+- (NSString *)fromObjectC:(NSString *)url block:(id)block {
+
+    NSString *value = block(url + @" from ObjectC");
+    return value;
 }
-
--(void)fromMangoRect:(CGRect)rect {
-
-    NSLog(@"Orignal fromMangoRect rect = %@",NSStringFromCGRect(rect));
-    
-}
-
--(NSString *)fromMangoStr1:(NSString *)str1 str2:(NSString *)str2 append:(BOOL)append {
-
-    return [str1 stringByAppendingString:str2];
-    
-}
-
-@end
 
 
 # 注意事项 
 
 *无法使用class()函数获取class类型，导致编译错误
+
+*不支持__weak、__strong、__block修饰
 
 脚本定义的类不能被继承
 
@@ -240,9 +180,9 @@ NSLog不能打印带参数日志
 
 无法使用@class声明和protocol定义
 
-无法使用OC宏定义和C函数
+不支持OC宏定义和C函数
 
-struct类型，CGFrame CGSize CGPoint CGRange等声明需要添加前缀struct，且无法单独修改属性
+struct类型限制，CGFrame CGSize CGPoint CGRange等声明需要添加前缀struct，且无法单独修改属性
 
 如下例子合法
 
