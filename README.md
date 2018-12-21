@@ -1,32 +1,25 @@
 # Mango
-
 Mango一种与Objective-C语法非常相似的语言，也是一种iOS程序hotfix的执行方案，可以使用Mango方法替换任何Objective-C方法。
 
 # 项目启用
-
 -(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     NSString *path = [[NSBundle mainBundle] pathForResource:@"demo" ofType:@"ctrip"];
     NSURL *scriptUrl = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@",path]];
     MMANontext *context = [[MMANontext alloc] init];
     [context evalMangoScriptWithURL:scriptUrl];
-    
     return YES;
 }
 
 # Example
-
 #### 定义class
-
 class MainViewController:UIViewController {
 
 }
 
 #### 定义方法
-实例方法和类方法
-
+定义实例方法和类方法
 -(void)viewDidLoad{
-
     super.viewDidLoad();
     //ORIG 调用原OC类方法
     self.ORIGviewDidLoad();
@@ -37,13 +30,9 @@ class MainViewController:UIViewController {
 }
 
 方法调用实现
-
 UIView *view = UIView.alloc().init();
-
 view.backgroundColor = UIColor.whiteColor();
-
 view.frame = CGRectMake(50, 100, 150, 200);
-
 self.view.addSubview:(view);
 
 #### property
