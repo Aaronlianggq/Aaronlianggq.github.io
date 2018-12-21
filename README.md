@@ -1,6 +1,7 @@
 # Mango
 Mango一种与Objective-C语法非常相似的语言，也是一种iOS程序hotfix的执行方案，可以使用Mango方法替换任何Objective-C方法。
 
+
 # 项目启用
 -(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
@@ -11,38 +12,83 @@ Mango一种与Objective-C语法非常相似的语言，也是一种iOS程序hotf
     return YES;
 }
 
+
 # Example
 #### 定义class
 class MainViewController:UIViewController {
 
 }
 
-#### 定义方法
-定义实例方法和类方法
--(void)viewDidLoad{
-    super.viewDidLoad();
-    //ORIG 调用原OC类方法
-    self.ORIGviewDidLoad();
-}
+#### 定义方法和实现
+定义类方法和实例方法
 
 +(void)load {
 
 }
 
+-(void)viewDidLoad {
+
+    super.viewDidLoad();
+    //ORIG 调用原OC类方法
+    self.ORIGviewDidLoad();
+}
+
+-(void)customMethodParam1:(id)parma1 param2:(id)param2 {
+
+}
+
 方法调用实现
+
 UIView *view = UIView.alloc().init();
 view.backgroundColor = UIColor.whiteColor();
 view.frame = CGRectMake(50, 100, 150, 200);
 self.view.addSubview:(view);
 
+多参数调用实现
+UIView.animateWithDuration:animations:(0.5,^(){
+    ...
+});
+
+调用OC方法，脚本未定义，OC必须实现，否则crash
+
+self.toOCMethod()  // toOCMethod为OC实现
+
 #### property
 属性声明和用法与OC一致
 
 @property (copy, nonatomic) NSString *testMainStr;
-
 self.testMainStr = @"Mango Main Str";
 
-#### 实例对象
+# 特殊类型
+#### struct
+Mango支持原生CGRect / CGPoint / CGSize / NSRange 这四个 struct 类型
+
+struct CGRect frame = {origin:{x:100,y:100},size:{width:100,height:100}}; 
+struct CGSize size = CGSizeMake(100,100);
+struct CGPoint point = CGPointMake(20, 20);
+struct NSRange range =  NSMakeRange(1, 10);
+range = {location:2,length:20};
+
+#### Selector
+SEL gcdsel = @selector(gcdExample); //支持编译指令写法
+
+#### GCD
+self.performSelector:withObject:(gcdsel,nil);
+
+- (void)gcdExample{
+    dispatch_queue_t queue = dispatch_queue_create("com.ctripdemo.mango", DISPATCH_QUEUE_CONCURRENT);
+    dispatch_async(queue, ^{
+        NSLog(@"dispatch_async");
+    });
+    dispatch_sync(queue, ^{
+        NSLog(@"dispatch_sync");
+    });
+}
+
+#### nil和NULL
+self.pro1 = nil;
+self.pro2 = NULL;
+
 
 
 -(void)mangoMethodTest:(id)sender {
