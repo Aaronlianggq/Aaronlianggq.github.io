@@ -20,7 +20,7 @@ class MainViewController:UIViewController {
 }
 
 #### 定义方法和实现
-- 定义类方法和实例方法
+####### 定义类方法和实例方法
 
 +(void)load {
 
@@ -38,7 +38,7 @@ class MainViewController:UIViewController {
 }
 
 
-- 方法调用实现
+####### 方法调用实现
 
 UIView *view = UIView.alloc().init();
 
@@ -49,12 +49,12 @@ view.frame = CGRectMake(50, 100, 150, 200);
 self.view.addSubview:(view);
 
 
-- 多参数调用实现
+####### 多参数调用实现
 
 self.customMethodParam1:param2:(@"p1",@"p2");
 
 
-- 调用OC方法
+####### 调用OC方法
 
 self.toOCMethod();  // 脚本未定义此方法，toOCMethod为OC实现
 
@@ -85,7 +85,7 @@ SEL gcdsel = @selector(gcdExample); //支持编译指令写法
 #### GCD
 self.performSelector:withObject:(gcdsel,nil);
 
-- (void)gcdExample{
+-(void)gcdExample{
 
     dispatch_queue_t queue = dispatch_queue_create("com.ctripdemo.mango", DISPATCH_QUEUE_CONCURRENT);
     dispatch_async(queue, ^{
@@ -96,7 +96,9 @@ self.performSelector:withObject:(gcdsel,nil);
     });
 }
 
-#### nil和NULL
+# nil和NULL
+支持nil和NULL使用
+
 self.pro1 = nil;
 
 self.pro2 = NULL;
@@ -105,12 +107,20 @@ self.pro2 = NULL;
 # NSArray / NSString / NSDictionary
 NSArray/NSDictionary/NSString 按照oc方式使用它们
 
+//字符串
+
 id mangoValue = @"字符串开始" + 123 + @"结束";
-  
+
+//数组
+
 NSArray *arr = @[@"zhao", @"qian", @"sun", @"li"];
+
 for (int i = 0 ; i < arr.count; i ++){
+
     NSString *arrVal = arr[i];
 }
+
+//字典
 
 NSDictionary *dic = @{@"zhang":@"san",@"li":@"si",@"wang":@"wu",@"zhao":@"liu"};
 
@@ -119,15 +129,17 @@ NSMutableDictionary *mutableDic = [NSMutableDictionary dictionaryWithDictionary:
 dic[@"newKey"] = @"newVal";
 
 # block
-- 统一定义为Block类型使用
+#### 统一定义为Block类型使用
 
 Block catStringBlock = ^NSString *(NSString *str1, NSString *str2){
+
     NSString *result = str1.stringByAppendingString:(str2);
     return result;
 };
+
 NSString *result = catStringBlock(@"str1",@"str2");
 
-- 传递block
+#### 传递block
 self.executeBlock:(catStringBlock);
 
 -(void)executeBlock:(Block)block {
@@ -135,10 +147,11 @@ self.executeBlock:(catStringBlock);
     NSString *value = block(@"val",@"val2");
 }
 
-- 传递block给OC
+#### 传递block给OC
 self.fromMangoBlock:(catStringBlock);
 
 //oc代码
+
 -(void)fromMangoBlock:(NSString * (^)(NSString * str1,NSString * str2))block {
 
     if(block){ 
@@ -147,8 +160,9 @@ self.fromMangoBlock:(catStringBlock);
     }
 }
 
-- 实现OC block
+#### 实现OC block
 //oc
+
 id ocBlock =  ^NSString *(NSString *str1){
 
     return [str1 stringByAppendingString:@" mango"];
@@ -209,8 +223,6 @@ frame.size = CGSizeMake(120,120);//无效
 NSStringFromRange(range) //crash
 
 CGRectFromString(@"{{100, 100}, {100, 100}}")//编译错误
-
-
 
 
 用法参考：https://github.com/YPLiang19/Mango
