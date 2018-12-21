@@ -184,9 +184,9 @@ NSLog(@"fromObjectCBlock block result = %@",value);
 
 # 注意事项 
 
-*无法使用class()函数获取class类型，导致编译错误
+* 无法使用class()函数获取class类型，导致编译错误
 
-*不支持__weak、__strong、__block修饰
+* 不支持__weak、__strong、__block修饰
 
 脚本定义的类不能被继承
 
