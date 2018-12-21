@@ -161,7 +161,7 @@ self.fromMangoBlock:(catStringBlock);
 }
 
 #### 实现OC block
-//oc
+//oc代码
 
 id ocBlock =  ^NSString *(NSString *str1){
 
@@ -172,8 +172,8 @@ NSString *value = [self fromObjectC:@"https://xxx" block:ocBlock];
 
 NSLog(@"fromObjectCBlock block result = %@",value);
 
-//脚本语言
-- (NSString *)fromObjectC:(NSString *)url block:(id)block {
+//脚本代码
+-(NSString *)fromObjectC:(NSString *)url block:(id)block {
 
     NSString *value = block(url + @" from ObjectC");
     return value;
