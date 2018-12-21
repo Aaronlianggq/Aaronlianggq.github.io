@@ -20,7 +20,7 @@ class MainViewController:UIViewController {
 }
 
 #### 定义方法和实现
-定义类方法和实例方法
+###### 定义类方法和实例方法
 
 +(void)load {
 
@@ -37,23 +37,33 @@ class MainViewController:UIViewController {
 
 }
 
-方法调用实现
+
+###### 方法调用实现
 
 UIView *view = UIView.alloc().init();
+
 view.backgroundColor = UIColor.whiteColor();
+
 view.frame = CGRectMake(50, 100, 150, 200);
+
 self.view.addSubview:(view);
 
-多参数调用实现
+
+
+###### 多参数调用实现
+
 UIView.animateWithDuration:animations:(0.5,^(){
+
     ...
+    
 });
 
-调用OC方法，脚本未定义，OC必须实现，否则crash
 
-self.toOCMethod()  // toOCMethod为OC实现
+###### 调用OC方法
 
-#### property
+self.toOCMethod()  // 脚本未定义，toOCMethod为OC实现
+
+# property
 属性声明和用法与OC一致
 
 @property (copy, nonatomic) NSString *testMainStr;
