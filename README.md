@@ -58,7 +58,7 @@ self.customMethodParam1:param2:(@"p1",@"p2");
 
 self.toOCMethod();  // 脚本未定义此方法，toOCMethod为OC实现
 
-+(void)toOCMethod {} //OC实现
++(void)toOCMethod {...} //OC代码
 
 # property
 属性声明和用法与OC一致
