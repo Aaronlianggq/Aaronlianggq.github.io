@@ -82,7 +82,7 @@ struct NSRange range =  NSMakeRange(1, 10);
 range = {location:2,length:20};
 
 #### Selector
-SEL gcdsel = @selector(gcdExample); //支持编译指令写法
+SEL gcdsel = @selector(gcdExample); 
 
 #### GCD
 self.performSelector:withObject:(gcdsel,nil);
@@ -126,7 +126,7 @@ for (int i = 0 ; i < arr.count; i ++){
 
 NSDictionary *dic = @{@"zhang":@"san",@"li":@"si",@"wang":@"wu",@"zhao":@"liu"};
 
-NSMutableDictionary *mutableDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+NSMutableDictionary *mutableDic = NSMutableDictionary.dictionaryWithDictionary:(dic);
 
 dic[@"newKey"] = @"newVal";
 
