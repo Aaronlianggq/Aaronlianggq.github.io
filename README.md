@@ -5,41 +5,60 @@ Mango一种与Objective-C语法非常相似的语言，也是一种iOS程序hotf
 # 项目启用
 
 -(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"demo" ofType:@"js"];
+
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"demo" ofType:@"ctrip"];
     NSURL *scriptUrl = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@",path]];
     MMANontext *context = [[MMANontext alloc] init];
     [context evalMangoScriptWithURL:scriptUrl];
+    
     return YES;
 }
 
-# 开始使用
+# Example
 
-- Mango
+#### 定义class
 
 class MainViewController:UIViewController {
 
-@property (copy, nonatomic) NSString *testMainStr;
+}
+
+#### 定义方法
+实例方法和类方法
 
 -(void)viewDidLoad{
 
     super.viewDidLoad();
     //ORIG 调用原OC类方法
     self.ORIGviewDidLoad();
-    self.view.backgroundColor = UIColor.redColor();
-    UIView *view = UIView.alloc().init();
-    view.frame = CGRectMake(50, 100, 150, 200);
-    view.backgroundColor = UIColor.whiteColor();
-    self.view.addSubview:(view);
-    UIView.animateWithDuration:animations:(0.5,^(){
-        view.transform = CGAffineTransformRotate(view.transform, M_PI / 4);
-    });
-    
 }
+
++(void)load {
+
+}
+
+方法调用实现
+
+UIView *view = UIView.alloc().init();
+
+view.backgroundColor = UIColor.whiteColor();
+
+view.frame = CGRectMake(50, 100, 150, 200);
+
+self.view.addSubview:(view);
+
+#### property
+属性声明和用法与OC一致
+
+@property (copy, nonatomic) NSString *testMainStr;
+
+self.testMainStr = @"Mango Main Str";
+
+#### 实例对象
+
 
 -(void)mangoMethodTest:(id)sender {
 
     //任意对象
-    
     id mangoValue = @"字符串开始" + 123 + @"结束";
     self.fromMangoFunction:(mangoValue); //字符串类型
     //数组循环
