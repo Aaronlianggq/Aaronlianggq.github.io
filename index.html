@@ -1,486 +1,102 @@
-<html>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+      http://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE HTML>
+<html lang="en">
   <head>
-
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width" />
-
-    <link rel="stylesheet" href="bootstrap.min.css" charset="UTF-8">  
-
-    <script type="text/javascript" src="client.min.js" ></script>
-	<script type="text/javascript" src="fingerprint2.min.js" ></script>
-        <script type="text/javascript" src="base64.js" ></script>
-	<script language="javascript">
-        
-        var hostSearchStr = 'safari';  //参数
-
-        var fingerComponents = null;
-        var clientjsComponents = null;
-
-        var appfingerComponents = null;
-        var appclientjsComponents = null;
-
-        function funcBtn1Click() {
-
-            var name = "myname";
-            console.log('类型' + typeof name);
-            var cookieValue = getCookie(name);
-            alert('value = ' + cookieValue);
-        }
-    
-        function getCookie(name){
-            var c = document.cookie;
-            var reg= new RegExp("(^|)"+name+"=([^;]*)(;|$)");
-            var nCookieArr = c.match(reg);
-            var returnValue = "";
-            if(nCookieArr){
-                var value = nCookieArr[0];
-                var tempArr = value.split("=");
-                if(tempArr.length >=2){
-                    returnValue =tempArr[1];
-                }
-                
-            }
-            return returnValue;
-        }
-    
-        function funcBtn3Click(){
-            //alert('传送数据begin');
-            var name = "myname";
-            var cookieValue = getCookie(name);
-            
-            var string = "com.skysea.safariFinger://cookie?" + cookieValue;
-            location.href = string;
-            
-
-        }
-    
-        function saveTestCookie() {
-            var name = "myTestCookie";
-            var Days = 30;
-            var exp = new Date();
-            exp.setTime(exp.getTime() + Days*24*60*60*1000);
-            document.cookie = "myname=" + name + ";expires=" + exp.toGMTString();
-            //location.reload();
-            //alert("set success");
-        }
- 
-        function clearCookie(){
-
-            var exp = new Date();
-            exp.setTime(exp.getTime() - 1);
-            var name = "myTestCookie";
-            document.cookie = "myname=" + name + ";expires=" + exp.toGMTString();
-
-        }
-
-        function copyContent() {
-
-            var copyDOM = document.getElementById("mydata");//要复制文字的节点  
-            
-            var range = document.createRange();      
-            // 选中需要复制的节点    
-            range.selectNode(copyDOM);    
-            // 执行选中元素    
-            window.getSelection().addRange(range);    
-            // 执行 copy 操作    
-            var successful = document.execCommand('copy');      
-            try {      
-                var msg = successful ? 'successful' : 'unsuccessful';   
-                  
-                console.log('copy is' + msg);      
-            } catch(err) {      
-                console.log('Oops, unable to copy');      
-            }    
-            // 移除选中的元素    
-            window.getSelection().removeAllRanges();    
-        }
-
-        //storeage
-        function setLocalStorege() {
-            var storageDom = document.getElementById("storege");
-            if(window.localStorage){
-                var storage = window.localStorage;
-                storage.setItem("myStorageItem","testContentStorage");
-                storageDom.innerText = 'storage: ' + storage.getItem("myStorageItem");
-
-            }else{
-                storageDom.innerText = 'storage is not use';
-            }
-        }
-
-        function clearLocalStorege() {
-            var storageDom = document.getElementById("storege");
-            if(window.localStorage){
-                var storage = window.localStorage;
-                storage.removeItem("myStorageItem");
-                storageDom.innerText = 'storage:' + storage.getItem("myStorageItem");
-
-
-
-            }else{
-                storageDom.innerText = 'storage is not use';
-            }
-        }
-
-        function isSafariIos11() {
-
-            var userAgent = navigator.userAgent.toLowerCase(); //取得浏览器的userAgent字符串 
-            console.log('userAgent ：' + userAgent);
-            // alert(userAgent);
-            var isSafari = userAgent.indexOf("safari") > -1 && userAgent.indexOf("chrome") == -1; 
-             //判断是否Safari浏览器 
-            if( !isSafari) {
-                alert('请使用safari浏览器测试');
-                return false;
-            }else{
-                 
-                var regStr_saf = /os [\d._]* like mac /gi ;
-                var verinfo = userAgent.match(regStr_saf) ;
-
-                if(verinfo){
-                    var version = (verinfo+"").replace(/[^0-9|_.]/ig,"").replace(/_/ig,".");
-                    if(parseFloat(version) >= 11){
-                        return true;
-                    }
-                    alert('iOS11以下系统无需测试');
-                    return false;
-                }
-                alert('请在ios移动设备上执行');
-                return false;
-            }
-        }
-
-
-		function downloadApp () {
-
-            var client = new ClientJS();
-            if( client.isMobileIOS()){
-                window.location.href = "itms-services://?action=download-manifest&url=https://aaronlianggq.github.io/manifest.plist";
-            }else{
-                alert('请在ios移动设备上执行');
-            }
-            
-        }
-
-
-
-        function completeLoadJs() {
-
-            var userAgent = navigator.userAgent.toLowerCase(); //取得浏览器的userAgent字符串 
-            console.log('userAgent ：' + userAgent);
-            // alert(userAgent);
-            // var isSafari = userAgent.indexOf("safari") > -1 && userAgent.indexOf("chrome") == -1; 
-            //  //判断是否Safari浏览器 
-            // if( !isSafari) {
-                // document.getElementById("getfingerID").style.display="none";//隐藏
-                // document.getElementById("fingerTable").style.display="none";//隐藏
-            // }
-
-
-            var searchObj = window.location.search;  
-            if(searchObj){
-                console.log(searchObj);
-                if (searchObj.indexOf("?") != -1) {  
-                    hostSearchStr = searchObj.substr(1); 
-                    if(hostSearchStr === 'app'){
-                        putAllTpyeFingerToDevice();
-                    }else if (hostSearchStr.indexOf('show=1') > -1 ){
-
-                    	document.getElementById("downapp").style.display="none";//隐藏
-                    	document.getElementById("appValueTr").style.display="";//
-                    	document.getElementById("reusltTr").style.display="";//
-
-                    	var params = hostSearchStr.split('&');
-
-                    	for(var j = 0; j < params.length; j++) {
-                    		var str = params[j];
-   							var vs = str.split('=');
-
-   							if(vs[0] === 'appClientJS'){
-   								var storageDom = document.getElementById("appclient");
-            					storageDom.innerText = vs[1];
-   							}else if (vs[0] === 'appFingerJS') {
-   								var storageDom = document.getElementById("appfinger");
-            					storageDom.innerText = vs[1];
-   							}else if (vs[0] === 'appClientJSComponents') {
-                                appclientjsComponents = JSON.parse(vs[1]);
-                            }else if (vs[0] === 'appFingerJSComponents') {
-                                appfingerComponents = JSON.parse(vs[1]);
-                            }
-						}
-                    	showFinger();
-
-                    }
-                }
-            }   
-        }
-
-        function compareTypeValues() {
-        	var appclient= document.getElementById("appclient");
-        	var client= document.getElementById("client");
-        	var clientResult= document.getElementById("clientResult");
-        	if(appclient.innerText === client.innerText){
-        		clientResult.innerText = '值相等';
-        	}else{
-        		clientResult.innerText = '值不一样';
-        	}
-
-
-        	var finger= document.getElementById("finger");
-        	var appfinger= document.getElementById("appfinger");
-        	var fingerResult= document.getElementById("fingerResult");
-        	if(appfinger.innerText === finger.innerText){
-        		fingerResult.innerText = '值相等';
-        	}else{
-        		fingerResult.innerText = '值不一样';
-        	}
-        }
-
-        function putAllTpyeFingerToDevice() {
-
-        	var client = new ClientJS(); // Create A New Client Object
-			var clientJSFinger = client.getFingerprint() + ""; // Get Client's Fingerprint
-
-            appclientjsComponents = client.getFingerprintComponent();
-
-			new Fingerprint2().get(function(result, components){
-				//a hash, representing your device fingerprint
-
-                appfingerComponents = components;
-            var b = new Base64();  
-
-				var query = "appFingerJS="+result + "&appClientJS=" + clientJSFinger + "&appFingerJSComponents=" + b.encode(JSON.stringify(appfingerComponents)) + "&appClientJSComponents=" + b.encode(JSON.stringify(appclientjsComponents))
-			  // alert(query);
-			  	location.href = "com.skysea.safariFinger://"+ hostSearchStr + "?" + query;
-			});
-
-        }
-
-        function showFinger(){
-
-        	clientJSGetFinger();
-        	getFinger();
-
-        }
-
-		//获取指纹
-        function clientJSGetFinger() {
-        	
-    		var client = new ClientJS(); // Create A New Client Object
-			var fingerprint = client.getFingerprint() + ""; // Get Client's Fingerprint
-
-			clientjsComponents = client.getFingerprintComponent();
-        	var storageDom = document.getElementById("client");
-
-            storageDom.innerText = fingerprint;
-        
-        }
- 
-        function getFinger() {
-        	new Fingerprint2().get(function(result, components){
-				//a hash, representing your device fingerprint
-              console.log('result =' + result + ',type:' + typeof result);
-			  console.log(components); // an array of FP components
-
-              fingerComponents = components;
-			  // alert(result);
-			  var storageDom = document.getElementById("finger");
-
-              storageDom.innerText = result;
-
-              compareTypeValues();
-
-			});
-        }
-
-
-        function showFingerDetail(){
-
-            alert(JSON.stringify(fingerComponents));
-
-        }
-        function showClientJSDetail(){
-
-            alert(JSON.stringify(clientjsComponents));
-
-        }
-
-        function showAppFingerDetail(){
-
-            alert(JSON.stringify(appfingerComponents));
-
-        }
-        function showAppClientJSDetail(){
-
-            alert(JSON.stringify(appclientjsComponents));
-
-        }
-
-        function goToApp(){
-            
-            var clientDom = document.getElementById("client");
-            var finger= document.getElementById("finger");
-            
-            var b = new Base64();  
-
-            var query = "appFingerJS="+finger.innerText + "&appClientJS=" + clientDom.innerText+ "&appFingerJSComponents=" + b.encode(JSON.stringify(fingerComponents)) + "&appClientJSComponents=" + b.encode(JSON.stringify(clientjsComponents))
-
-            var string = "com.skysea.safariFinger://test?" + query;
-            window.location.href = string;
-
-        }
-	</script>
+    <script src="./map_tool.js" language="javascript"></script>
+    <script src="http://ditu.google.cn/maps/api/js?libraries=geometry&sensor=true&language=zhCN&key=AIzaSyAfHfgbSC2J-Pt-EubD8VQoXeOUglE-kBU"></script>
+    <script language="javascript">
+
+      var _mapTypeSelectedElement = null
+      function loadLuanch(){
+        initGoogleMap()
+        changeSelectedTypeElement(__currentMapSelectedType)
+      }
+
+      function changeSelectedTypeElement(id){
+          if(_mapTypeSelectedElement){ //选中的按钮
+            _mapTypeSelectedElement.style.backgroundColor = "#FFFFFF"
+            _mapTypeSelectedElement.style.color = "#333333"
+            _mapTypeSelectedElement = null
+          }
+
+          let eleID = "btn" + id
+          var selectElement = document.getElementById(eleID)
+          if(selectElement){
+            selectElement.style.backgroundColor = "#5555EE"
+            selectElement.style.color = "#FFFFFF"
+            _mapTypeSelectedElement = selectElement
+          }
+          didMapChangSelectedType(id)
+      }
+
+      /*
+       * 点击事件
+       */
+      function mapSelectTypeClick(id){
+        changeSelectedTypeElement(id)
+      }
+
+      function mapCircleAreaClick(id){
+        changeSelectedTypeElement(id)
+      }
+
+    </script>
 
     <style type="text/css">
+      #map {
+        height: 100%;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
 
+      .moudle_list {
+        width: 100px;
+        position: absolute;
+        top: 50%;
+        right: 8px;
 
-        .moudle {
-            width: 100%;
-            position: relative;
-            top: 5%;
-        }
-
-        .moudle_list {
-            width: 100%;
-            position: relative;
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-
-        .moudle_list div {
-            width: 80%;
-            background: #EFEFEF;
-            color: #099FDE;
-            text-align: center;
-            font-size: 15px;
-            margin: auto;
-            padding: 5px 0 5px 0;
-            border-radius: 5px;
-
-        }
-
-        button {
-        	color: #099FDE;
-        	border: none;
-            background: #EFEFEF;
-        }
-
-        td,th {
-        	WORD-WRAP: break-word;
-        	width: 33%;
-
-
-        }
+      }
+      .moudle_list div {
+        width: 100%;
+        position: relative;
+        background-color: #FFFFFF;
+        color: #333333;
+        margin: auto;
+        text-align: center;
+        font-size: 15px;
+        border-color: #bdbdbd;
+        border-radius: 3px;
+        cursor: default;
+      }
 
     </style>
-
   </head>
+  <body onload="loadLuanch()">
 
-  <body onload="completeLoadJs()">
-
-     <div class="moudle">
- <!--  	<div class="moudle_list">
-		    <div  id="btn1" onclick="funcBtn1Click()" >获取cookie</div>
-		</div>
-
-
-		<div class="moudle_list">
-		    <div  id="btn3" onclick="funcBtn3Click()" >cookie传入App</div>
-		</div>
-
-		<div class="moudle_list">
-		    <div  id="btn3" onclick="saveTestCookie()" >设置测试cookie</div>
-		</div>
-
-		<div class="moudle_list">
-		    <div  id="btn3" onclick="clearCookie()" >删除cookie</div>
-		</div>
-
-
-		<div class="moudle_list">
-			<div >
-		    	<button type="button" id="btn3" onclick="copyContent()" >点击复制</button>
-		    </div>
-		    <div class="showValue" id="mydata">我是浏览器复制的内容</div>  
-		    <br>
-		</div>
-		
-
-		<div class="moudle_list">
-		    <div  id="btn3" onclick="getFinger()" >fingerPrintJs获取指纹ID值</div>
-		</div>
-
-
-		
-		<div class="moudle_list">
-		    <div  id="btn3" onclick="setLocalStorege()" >设置localStorage</div>
-		</div>
-
-
-		<div class="moudle_list">
-		    <div  id="btn3" onclick="clearLocalStorege()" >删除localStorage</div>
-		    <div class="showValue" id="storege">storage: </div> 
-		    <br>
-		</div> -->
-
-		 
-
-
-        <div class="moudle_list">
-        
-            <div id="downapp" onclick="downloadApp()"> 
-           		下载测试App
-            </div>
-        </div>
-        
-        <div id="getfingerID" class="moudle_list">
-            <div onclick="showFinger()"> safari获取指纹ID </div>
-        </div>
-
-        <div id="getfingerID" class="moudle_list">
-            <div onclick="goToApp()"> 打开app详细比较 </div>
-        </div>
-
-        <div id="fingerTable" class="moudle_list">
-
-        	<div style="background: #ffffff;">
-        		
-
-        		<table  class="table table-bordered" width="100%" style="color: #099FDE;TABLE-LAYOUT: fixed;"  >
-				  <tr>
-				    <th ></th>
-				    <th >指纹算法一</th>
-				    <th >指纹算法二</th>
-				  </tr>
-				  <tr>
-				    <th >safari获取值</th>
-				    <th  id="finger"  style="color:#FF3333" onclick="showFingerDetail()"></th>
-				    <th  id="client"  style="color:#FF3333" onclick="showClientJSDetail()"></th>
-				  </tr>
-				  <tr id="appValueTr" style="display:none">
-				    <th >app传入值</th>
-				    <th  id="appfinger" style="color:#FF3333" onclick="showAppFingerDetail()"></th>
-				    <th  id="appclient" style="color:#FF3333" onclick="showAppClientJSDetail()"></th>
-				  </tr>
-				  <tr id="reusltTr" style="display:none">
-				    <th >比较结果</th>
-				    <th  id="fingerResult" style="color:#FF3333"></th>
-				    <th  id="clientResult" style="color:#FF3333"></th>
-				  </tr>
-				</table>
-
-        	</div>
-
-        	<!-- <div>FingerJS获取指纹ID:</div>
-        	<div id="finger" style="color:#FF3333"></div>
-
-        	<br>
-        	<div>ClientJS获取指纹ID:</div>
-        	<div  style="color:#FF3333"></div> -->
-<!--             <div onclick="clientJSPutFinger()"> clientJs获取指纹ID</div> -->
-        </div>
+    <div id="map"></div>
+    <div class="moudle_list">
+        <div id="btn1" onclick="mapSelectTypeClick(1)" >滑动模式</div>
+        <br>
+        <div id="btn2" onclick="mapCircleAreaClick(2)" >圈匡模式</div>
     </div>
 
   </body>
-
 </html>
