@@ -86,11 +86,15 @@
         }
       
         function openUrlForWallet(){
-            CtripUtil.app_open_url("wallet/index.html#outbindcards?path=spd", 5, "test", "", true, {});
+            CtripUtil.app_open_url("wallet/index.html#outbindcards?path=spd", 5, "", "", true, {});
         }
     
         function openUrlForAdvertisement() {
-            CtripUtil.app_open_url("advertisement/index.html", 5, "test", "", true, {});
+            CtripUtil.app_open_url("advertisement/index.html", 5, "", "", true, {});
+        }
+        function openUrlCtrip() {
+            CtripUtil.app_open_url("https://m.ctrip.com/html5/", 5, "", "", true, {});
+
         }
       
     </script>
@@ -148,17 +152,6 @@
         <div  id="btn4" onclick="clearServerCookie()" >清除服务cookie</div>
         <br>
     </div>
-  
-    <div class="moudle_list">
-        <div  id="btn5" onclick="openUrlForWallet()" >跳转本地wallet</div>
-        <br>
-    </div>
-  
-    <div class="moudle_list">
-        <div  id="btn6" onclick="openUrlForAdvertisement()" >跳转本地advertisement</div>
-        <br>
-    </div>
-
 <!--     <div class="moudle_list">
         <div  id="btn5" onclick="showCookie()" >显示所有cookie</div>
         <br>
@@ -170,7 +163,21 @@
         <div  id="btn4"  ></div>
         <br>
     </div>  
-
+    
+    <div class="moudle_list">
+        <div  id="btn5" onclick="openUrlForWallet()" >跳转本地wallet</div>
+        <br>
+    </div>
+  
+    <div class="moudle_list">
+        <div  id="btn6" onclick="openUrlForAdvertisement()" >跳转本地advertisement</div>
+        <br>
+    </div>
+  
+     <div class="moudle_list">
+        <div  id="btn7" onclick="openUrlCtrip()" >跳转携程页面</div>
+        <br>
+    </div>
 
 
 </body>
