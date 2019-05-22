@@ -84,7 +84,15 @@
             var c = document.cookie;
             document.getElementById("btn4").innerHTML = c
         }
-
+      
+        function openUrlForWallet(){
+            CtripUtil.app_open_url("wallet/index.html#outbindcards?path=spd", 5, "test", "", true, {});
+        }
+    
+        function openUrlForAdvertisement() {
+            CtripUtil.app_open_url("advertisement/index.html", 5, "test", "", true, {});
+        }
+      
     </script>
     <style type="text/css">
 
@@ -129,15 +137,25 @@
         <br>
     </div>
      <div class="moudle_list">
-        <div  id="btn3" onclick="getServerCookie()" >获取服务cookie</div>
+        <div  id="btn2" onclick="getServerCookie()" >获取服务cookie</div>
         <br>
     </div>
     <div class="moudle_list">
-        <div  id="btn2" onclick="clearLocalCookie()" >清除本地cookie</div>
+        <div  id="btn3" onclick="clearLocalCookie()" >清除本地cookie</div>
         <br>
     </div>
     <div class="moudle_list">
-        <div  id="btn2" onclick="clearServerCookie()" >清除服务cookie</div>
+        <div  id="btn4" onclick="clearServerCookie()" >清除服务cookie</div>
+        <br>
+    </div>
+  
+    <div class="moudle_list">
+        <div  id="btn5" onclick="openUrlForWallet()" >跳转本地wallet</div>
+        <br>
+    </div>
+  
+    <div class="moudle_list">
+        <div  id="btn6" onclick="openUrlForAdvertisement()" >跳转本地advertisement</div>
         <br>
     </div>
 
