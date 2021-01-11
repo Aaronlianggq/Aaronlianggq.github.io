@@ -36,7 +36,7 @@
             var Days = 30;
             var exp = new Date();
             exp.setTime(exp.getTime() + Days*24*60*60*1000);
-            document.cookie = localCookieName +"=localCookieValue;expires=" + exp.toGMTString() + "";
+            document.cookie = localCookieName + "=localCookieValue;expires=" + exp.toGMTString() + "";
             showCookie()
         }
  
@@ -87,13 +87,8 @@
             document.getElementById("btn4").innerHTML = c
         }
       
-        function openUrlForWallet(){
-            CtripUtil.app_open_url("wallet/index.html#outbindcards?path=spd", 4, "", "", true, {'isDeleteCurrentPage':true});
-        }
-    
-        function openUrlForAdvertisement() {
-            CtripUtil.app_open_url("advertisement/index.html", 4, "", "", true, {});
-        }
+        
+      
         function openUrlCtrip() {
             CtripUtil.app_open_url("https://m.ctrip.com/html5/", 2, "", "", true, {});
 
@@ -166,18 +161,8 @@
         <br>
     </div>  
     
-    <div class="moudle_list">
-        <div  id="btn5" onclick="openUrlForWallet()" >跳转本地wallet</div>
-        <br>
-    </div>
-  
-    <div class="moudle_list">
-        <div  id="btn6" onclick="openUrlForAdvertisement()" >跳转本地advertisement</div>
-        <br>
-    </div>
-  
      <div class="moudle_list">
-        <div  id="btn7" onclick="openUrlCtrip()" >跳转携程页面</div>
+        <div  id="btn7" onclick="openUrlCtrip()" >跳转百度</div>
         <br>
     </div>
 
