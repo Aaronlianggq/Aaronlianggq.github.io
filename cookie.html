@@ -90,8 +90,11 @@
         
       
         function openUrlCtrip() {
-            CtripUtil.app_open_url("https://m.ctrip.com/html5/", 2, "", "", true, {});
+             var params = {
+                    'url'  : 'http://127.0.0.1:5000/test/dfw_app_test.html'
+                }
 
+             dfwAppclass.DFWUtils.appOpenNewWeb(params)
         }
       
     </script>
