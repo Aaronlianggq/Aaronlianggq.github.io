@@ -3,7 +3,7 @@
         "apps":[],
         "details":[
             {
-                "paths":["*"],
+                "paths":["/app/*"],
                 "appID":"P3LL7TZ6AB.com.dongffl.baifude"
             }
         ]
