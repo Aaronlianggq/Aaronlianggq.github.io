@@ -1,41 +1,90 @@
-<!--
-  Licensed to the Apache Software Foundation (ASF) under one or more
-  contributor license agreements.  See the NOTICE file distributed with
-  this work for additional information regarding copyright ownership.
-  The ASF licenses this file to You under the Apache License, Version 2.0
-  (the "License"); you may not use this file except in compliance with
-  the License.  You may obtain a copy of the License at
-      http://www.apache.org/licenses/LICENSE-2.0
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
--->
-<!DOCTYPE HTML>
-<html lang="en">
-  <head>
+<html>
+	<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width" />
-    <script language="javascript">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, user-scalable=no"/>
+    <link rel="stylesheet" href="dfwapps://static.dongfangfuli.com/family/umi.css">
+	<script language="javascript">
+
+		function showUserAgent() {
+			document.getElementById('btn15').innerHTML = "userAgent: " + navigator.userAgent
+		}
+
+		function showCookie() {
+			var cookie = document.cookie
+            document.getElementById('btn16').innerHTML = "cookie: " + cookie
+        }
+
+        function showTime() {
+            var exp = new Date();
+            console.log(exp.toGMTString())
+            exp.setTime(exp.getTime() - 3600)
+            console.log(exp.toGMTString())
+        }
+
+        function addCookie() {
+            document.cookie = 'city=shanghai;domain=10.55.37.14;path=/'; 
+            document.cookie = 'appCity=shanghai,145;domain=10.55.37.14;path=/'; 
+        }
+        function deleteCookie() {
+            var exp = new Date();
+            exp.setTime(exp.getTime() - 3000)
+            // document.cookie = 'df_lang=zh-CN;domain=.dongfangfuli.com;path=/;expires=' + exp.toGMTString()
+            // document.cookie = 'dfflone=bc7de499621fc6a3142f80809f0a7ade468bd352;domain=.dongfangfuli.com;path=/;expires=' + exp.toGMTString()
+            // document.cookie = 'city=145;domain=.dongfangfuli.com;path=/;expires=' + exp.toGMTString()
+            // document.cookie = 'mall_userId=6150192;domain=.dongfangfuli.com;path=/;expires=' + exp.toGMTString()
+            // document.cookie = 'appCity=上海,145;domain=.dongfangfuli.com;path=/;expires=' + exp.toGMTString()
+            document.cookie = 'city=shanghai;domain=10.55.37.14;path=/;' + 'expires=' + exp.toGMTString()
+            // document.cookie = 'city=shanghai;domain=10.55.37.14;path=/;expires=exp.toGMTString()'; 
 
 
-    </script>
+        }
+		
+	</script>
+
 
     <style type="text/css">
-      #map {
-        height: 100%;
-      }
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      
+        body {
+            background-color: #ffffff;
+        }
+
+        .moudle_list {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            position: relative;
+
+        }
+        .moudle_list_item {
+            width: 100%;
+            margin-top: 5px;
+            padding-left: 5px;
+            padding-right: -5px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            background-color: #EFEFEF;
+            color: #099FDE;
+            font-size: 16px;
+						word-break: break-all;
+						overflow: hidden;
+						border-radius: 5px;
+        }
+
 
     </style>
-  </head>
-  <body >
-      <br>
-      <a href="itms-services://?action=download-manifest&url=https://aaronlianggq.github.io/dfapp.plist">ios百福得点击安装</a>
-  </body>
+</head>
+<body>
+    <script src="dfwapps://static.dongfangfuli.com/family/umi.js"> </script>
+    <div>
+     <div class="moudle_list"> DFWUtils
+      <div class="moudle_list_item" id="btn15" onclick="showUserAgent()" >userAgent: </div>
+	  <div class="moudle_list_item" id="btn16" onclick="showCookie()" >cookie: </div>
+      <div class="moudle_list_item" id="btn17" onclick="showTime()" >time: </div>
+      <div class="moudle_list_item" id="btn1" onclick="addCookie()" >setCookie </div>
+      <div class="moudle_list_item" id="btn2" onclick="deleteCookie()" >delCookie </div>
+	 </div>
+	</div>
+</body>
+
+
+
 </html>
