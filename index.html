@@ -3,8 +3,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="style-src 'self' 'unsafe-inline' http: https: dfwapps: dfwapp:;script-src 'self' 'unsafe-inline' http: https: dfwapps: dfwapp:">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, user-scalable=no"/>
-    <link rel="stylesheet" href="dfwapps://family/umi.css">
+    <link rel="stylesheet" href="dfwapps://static.dongfangfuli.com/family/umi.css">
 	<script language="javascript">
+
+        window.onload = function() {
+            dfAppLoadScriptHandler()
+        }
 
 		function showUserAgent() {
 			document.getElementById('btn15').innerHTML = "userAgent: " + navigator.userAgent
@@ -36,10 +40,19 @@
             // document.cookie = 'appCity=上海,145;domain=.dongfangfuli.com;path=/;expires=' + exp.toGMTString()
             document.cookie = 'city=shanghai;domain=10.55.37.14;path=/;' + 'expires=' + exp.toGMTString()
             // document.cookie = 'city=shanghai;domain=10.55.37.14;path=/;expires=exp.toGMTString()'; 
-
-
         }
 		
+        function dfAppLoadScriptHandler() {
+            const spts = document.getElementsByTagName("script");
+            for(var i = 0; i < spts.length; i++) {
+                let spt = spts[i];
+                let src = spt.src || "";
+                if (src != "") {
+                    console.log("get scr = " + src);
+                }
+            }
+        }
+
 	</script>
 
 
@@ -74,7 +87,7 @@
     </style>
 </head>
 <body>
-    <script src="dfwapps://family/umi.js"> </script>
+    <script src="dfwapps://static.dongfangfuli.com/family/umi.js"> </script>
     <div>
      <div class="moudle_list"> DFWUtils
       <div class="moudle_list_item" id="btn15" onclick="showUserAgent()" >userAgent: </div>
