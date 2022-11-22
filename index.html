@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="style-src 'self' 'unsafe-inline' http: https: dfwapps: dfwapp: wss: file:;script-src 'self' 'unsafe-inline' 'unsafe-eval' http: https: dfwapps: dfwapp: wss: file:">
+    <meta http-equiv="Content-Security-Policy" content="style-src 'self' 'unsafe-inline' http: https: dfwapps: ftp: wss: file: dynamic;script-src 'self' 'unsafe-inline' 'unsafe-eval' http: https: dfwapps: ftp: wss: file: dynamic:">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, user-scalable=no"/>
     <!-- <link rel="stylesheet" href="dfwapps://static.dongfangfuli.com/family/umi.css"> -->
     <link rel="stylesheet" href="dfwapps://static.dongfangfuli.com/family/umi002.css">
@@ -9,17 +9,20 @@
     <link rel="stylesheet" href="file://static.dongfangfuli.com/family/umi.css">
     <script src="wss://static.dongfangfuli.com/family/umi.js"> </script>
     <script src="file://static.dongfangfuli.com/family/umi.js"> </script>
+    <script src="ftp://static.dongfangfuli.com/family/umi_ftp.js"> </script>
+    <script src="dynamic://static.dongfangfuli.com/family/umi.js"> </script>
+
     <script language="javascript">
 
         window.onload = function() {
         }
 
-	function showUserAgent() {
-	    document.getElementById('btn15').innerHTML = "userAgent: " + navigator.userAgent
-	}
+        function showUserAgent() {
+            document.getElementById('btn15').innerHTML = "userAgent: " + navigator.userAgent
+        }
 
-	function showCookie() {
-	    var cookie = document.cookie
+        function showCookie() {
+            var cookie = document.cookie
             document.getElementById('btn16').innerHTML = "cookie: " + cookie
         }
 
@@ -87,9 +90,9 @@
             background-color: #EFEFEF;
             color: #099FDE;
             font-size: 16px;
-	    word-break: break-all;
-	    overflow: hidden;
-	    border-radius: 5px;
+            word-break: break-all;
+            overflow: hidden;
+            border-radius: 5px;
         }
 
 
