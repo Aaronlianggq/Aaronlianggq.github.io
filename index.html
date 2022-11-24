@@ -1,4 +1,34 @@
+<script language="javascript">
+    (function(open) {
+        XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
+            console.log("url = " + url);
+            var newUrl = url;
+            try {
+                if (newUrl.indexOf("//") == 0) {
+                    //如果是爽斜杠
+                    newUrl = location.protocol + url
+                }else if  (newUrl.indexOf("/") == 0) {
+                    //如果是单斜杠
+                    newUrl = location.protocol + "//" + location.host + url
+                }
+                var reqUrl = new URL(newUrl);
+                let scheme = reqUrl.protocol.toLowerCase();
+                if (scheme.indexOf("dfwapp") >= 0) {
+                    let httpScheme = scheme.replace("dfwapp", "http");
+                    reqUrl.protocol = httpScheme;
+                    newUrl = reqUrl.href
+                    console.log("newUrl = " + newUrl);
+                }
+            } catch (error) {
+                newUrl = url;
+            }
+            open.call(this, method, newUrl, async, user, pass);
+        };
+    })(XMLHttpRequest.prototype.open);
+</script>
+
 <html>
+    
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="style-src 'self' 'unsafe-inline' http: https: dfwapps: ftp: wss: file: dynamic: ftps:;script-src 'self' 'unsafe-inline' 'unsafe-eval' http: https: dfwapps: ftp: wss: file: dynamic: ftps:">
@@ -14,6 +44,7 @@
     <script src="//static.dongfangfuli.com/family/umi.js"> </script>
 
     <script language="javascript">
+        showTime();
 
         window.onload = function() {
         }
@@ -28,30 +59,66 @@
         }
 
         function showTime() {
-            var exp = new Date();
-            console.log(exp.toGMTString())
-            exp.setTime(exp.getTime() - 3600)
-            console.log(exp.toGMTString())
+            const xhr = new XMLHttpRequest();
+            //2.初始化  设置请求方法和url
+            xhr.open('GET', 'dfwapps://app.dongfangfuli.com/common/openapi?union=df&city=145&client_id=CCPBSs8e8n&reload=1');
+            //3.发送
+            xhr.send();
+            //4. 事件绑定 处理服务端返回的结果
+            // on  when  当....的时候
+            // readystate 是 xhr 对象中的属性，表示状态 0 1 2 3 4
+            xhr.onreadystatechange = function () {
+                //判断 （服务端返回了所有的结果）
+                if (xhr.readyState === 4) {
+                    //判断响应状态码 200 404 403 401 500
+                    //2xx 成功
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                    }
+                    console.log(xhr.response)
+                }
+            }
         }
 
         function addCookie() {
-            var link = document.createElement("link");  
-            link.setAttribute("rel", "stylesheet");  
-            link.setAttribute("href", "dfwapps://static.dongfangfuli.com/family/umi.css");  
-            var heads = document.getElementsByTagName("head");
-            heads[0].appendChild(link);  
-
+            const xhr = new XMLHttpRequest();
+            //2.初始化  设置请求方法和url
+            xhr.open('GET', '/common/openapi?union=df&city=145&client_id=CCPBSs8e8n&reload=1');
+            //3.发送
+            xhr.send();
+            //4. 事件绑定 处理服务端返回的结果
+            // on  when  当....的时候
+            // readystate 是 xhr 对象中的属性，表示状态 0 1 2 3 4
+            xhr.onreadystatechange = function () {
+                //判断 （服务端返回了所有的结果）
+                if (xhr.readyState === 4) {
+                    //判断响应状态码 200 404 403 401 500
+                    //2xx 成功
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                    }
+                    console.log(xhr.response)
+                }
+            }
         }
+
         function deleteCookie() {
-            var exp = new Date();
-            exp.setTime(exp.getTime() - 3000)
-            // document.cookie = 'df_lang=zh-CN;domain=.dongfangfuli.com;path=/;expires=' + exp.toGMTString()
-            // document.cookie = 'dfflone=bc7de499621fc6a3142f80809f0a7ade468bd352;domain=.dongfangfuli.com;path=/;expires=' + exp.toGMTString()
-            // document.cookie = 'city=145;domain=.dongfangfuli.com;path=/;expires=' + exp.toGMTString()
-            // document.cookie = 'mall_userId=6150192;domain=.dongfangfuli.com;path=/;expires=' + exp.toGMTString()
-            // document.cookie = 'appCity=上海,145;domain=.dongfangfuli.com;path=/;expires=' + exp.toGMTString()
-            document.cookie = 'city=shanghai;domain=10.55.37.14;path=/;' + 'expires=' + exp.toGMTString()
-            // document.cookie = 'city=shanghai;domain=10.55.37.14;path=/;expires=exp.toGMTString()'; 
+            const xhr = new XMLHttpRequest();
+            //2.初始化  设置请求方法和url
+            xhr.open('GET', '//app.dongfangfuli.com/common/openapi?union=df&city=145&client_id=CCPBSs8e8n&reload=1');
+            //3.发送
+            xhr.send();
+            //4. 事件绑定 处理服务端返回的结果
+            // on  when  当....的时候
+            // readystate 是 xhr 对象中的属性，表示状态 0 1 2 3 4
+            xhr.onreadystatechange = function () {
+                //判断 （服务端返回了所有的结果）
+                if (xhr.readyState === 4) {
+                    //判断响应状态码 200 404 403 401 500
+                    //2xx 成功
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                    }
+                    console.log(xhr.response)
+                }
+            }
         }
 		
         // function dfAppLoadScriptHandler() {
