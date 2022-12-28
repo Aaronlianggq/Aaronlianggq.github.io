@@ -1,32 +1,4 @@
-<!-- <script language="javascript">
-    (function(open) {
-        XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
-            console.log("url = " + url);
-            var newUrl = url;
-            try {
-                if (newUrl.indexOf("//") == 0) {
-                    //如果是爽斜杠
-                    newUrl = location.protocol + url
-                }else if  (newUrl.indexOf("/") == 0) {
-                    //如果是单斜杠
-                    newUrl = location.protocol + "//" + location.host + url
-                }
-                var reqUrl = new URL(newUrl);
-                let scheme = reqUrl.protocol.toLowerCase();
-                if (scheme.indexOf("dfwapp") >= 0) {
-                    let httpScheme = scheme.replace("dfwapp", "http");
-                    reqUrl.protocol = httpScheme;
-                    newUrl = reqUrl.href
-                    console.log("newUrl = " + newUrl);
-                }
-            } catch (error) {
-                newUrl = url;
-            }
-            open.call(this, method, newUrl, async, user, pass);
-        };
-    })(XMLHttpRequest.prototype.open);
-</script>
- -->
+
 <html>
     
 <head>
@@ -34,7 +6,8 @@
     <meta http-equiv="Content-Security-Policy" content="style-src 'self' 'unsafe-inline' http: https: dfwapps: ftp: wss: file: dynamic: ftps:;script-src 'self' 'unsafe-inline' 'unsafe-eval' http: https: dfwapps: ftp: wss: file: dynamic: ftps:">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, user-scalable=no"/>
     <link rel="stylesheet" href="dfwapps://static.dongfangfuli.com/family/umi.css">
-    <link rel="stylesheet" href="//static.dongfangfuli.com/family/umi002.css">
+    <link rel="stylesheet" href="./find.css">
+
     <!-- <link rel="stylesheet" href="wss://static.dongfangfuli.com/family/umi.css">
     <link rel="stylesheet" href="file:///static.dongfangfuli.com/family/umi.css">
     <script src="wss://static.dongfangfuli.com/family/umi.js"> </script>
@@ -178,7 +151,6 @@
       <div class="moudle_list_item" id="btn2" onclick="deleteCookie()" >delCookie </div>
 	 </div>
      <img src="dfwapps://bfd-prd.oss-cn-shanghai.aliyuncs.com/bfd/2022-04-26/3899d69743fb4c3696dce9a4fe417a3f.png"></img>
-     <img src="wss://bfd-prd.oss-cn-shanghai.aliyuncs.com/bfd/2022-04-26/3899d69743fb4c3696dce9a4fe417a3f.png"></img>
 	</div>
 </body>
 
