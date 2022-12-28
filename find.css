@@ -1,0 +1,21 @@
+.moudle_list {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    position: relative;
+
+}
+.moudle_list_item {
+    width: 100%;
+    margin-top: 5px;
+    padding-left: 5px;
+    padding-right: -5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #EFEFEF;
+    color: #099FDE;
+    font-size: 16px;
+    word-break: break-all;
+    overflow: hidden;
+    border-radius: 5px;
+}
