@@ -85,7 +85,7 @@
             xhr.addEventListener("abort", transferCanceled);
             xhr.send()
             xhr.onreadystatechange = () => {
-                console.log("readyState = " + xhr.readyState);
+                console.log("readyState = " + xhr.readyState + "，status = " + xhr.status);
             }
         }
 
