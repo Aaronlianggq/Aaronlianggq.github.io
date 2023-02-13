@@ -72,6 +72,56 @@
                 }
             }
         }
+	    
+	function downFileTest() {
+            // 要监控请求进度，可以在 xhr 对象上注册进度相关的事件
+            // 每个请求，开始都会触发 loadStart，结束都会触发 loadEnd 事件，它们之间，
+            // 还可能会触发一个或多个其他事件，有些事件可能会多次触发。
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET","https://aaronlianggq.github.io/index.html");
+            xhr.addEventListener("progress", updateProgress);
+            xhr.addEventListener("load" , transferComplete);
+            xhr.addEventListener("error", transferFailed  );
+            xhr.addEventListener("abort", transferCanceled);
+            xhr.send()
+            xhr.onreadystatechange = () => {
+                console.log("readyState = " + xhr.readyState);
+                if (xhr.readyState === 4) {
+                    if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+                    resolve(xhr.responseURL)
+                    } else {
+                    reject(new Error(xhr.statusText))
+                    }
+                }
+            }
+        }
+
+        // 服务端到客户端的传输进程（下载）
+        function updateProgress (event) {
+            // 如果 `lengthComputable` 属性的值是 false，那么意味着总字节数是未知并且 total 的值为零。
+            if (event.lengthComputable) {
+                let progress = event.loaded / event.total * 100;
+                document.getElementById('btn501').innerHTML = '加载进度：' + progress + '%'
+                console.log('加载进度：' + progress + '%') // 一个百分比进度
+            } else {
+                // 总大小未知时不能计算进度信息
+            }
+        }
+        function transferComplete(event) {
+            console.log("传输完成");
+            document.getElementById('btn501').innerHTML = "传输完成"
+
+        }
+        function transferFailed(event) {
+            console.log("传输失败");
+            document.getElementById('btn501').innerHTML = "传输失败"
+
+        }
+        function transferCanceled(event) {
+            console.log("该请求已经被取消");
+            document.getElementById('btn501').innerHTML = "该请求已经被取消"
+        }
+
 		
         
     </script>
@@ -89,13 +139,15 @@
     <div>
      <div class="moudle_list"> DFWUtils
       <div class="moudle_list_item" id="btn15" onclick="showUserAgent()" >userAgent: </div>
-	  <div class="moudle_list_item" id="btn16" onclick="showCookie()" >cookie: </div>
+      <div class="moudle_list_item" id="btn16" onclick="showCookie()" >cookie: </div>
       <div class="moudle_list_item" id="btn17" onclick="showTime()" >time: </div>
       <div class="moudle_list_item" id="btn1" onclick="addCookie()" >setCookie </div>
       <div class="moudle_list_item" id="btn2" onclick="deleteCookie()" >delCookie </div>
-	 </div>
+      <div class="moudle_list_item" id="btn500" onclick="downFileTest()" >下载测试 </div>
+      <div class="moudle_list_item" id="btn501" >显示下载状态 </div>
+     </div>
      <img src="dfwapps://bfd-prd.oss-cn-shanghai.aliyuncs.com/bfd/2022-04-26/3899d69743fb4c3696dce9a4fe417a3f.png"></img>
-	</div>
+    </div>
 </body>
 
 
