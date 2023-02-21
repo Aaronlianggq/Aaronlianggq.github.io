@@ -14,23 +14,23 @@
                     console.log(respData)
                 });
             }
-	}
+        }
 
-	    
+        
         function getGpsLoc(){
             if (window.dfwAppclass) {
-                dfwAppclass.DFWLocation.appGetGpsLoc(function(respData){
-                    let infoStr = JSON.stringify(respData)
-                    let lat = data["latitude"]
-                    let lon = data["longitude"]
-                    if (lat != "" && lon != "") {
-                        document.getElementById('btn2').innerHTML = "获取定位信息： 经度_" + lon + "维度_" + lat
-                    }else {
-                        document.getElementById('btn2').innerHTML = "获取定位失败"
-                    }
-                })
-            }
-        }
+               dfwAppclass.DFWLocation.appGetGpsLoc(function(respData){
+             		let data = respData["data"]
+                   	let lat = data["latitude"]
+                   	let lon = data["longitude"]
+                   	if (lat != "" && lon != "") {
+                       	document.getElementById('btn2_1').innerHTML = "获取定位信息： 经度_" + lon + "维度_" + lat
+                   	}else {
+                       	document.getElementById('btn2_1').innerHTML = "获取定位失败"
+                   	}
+               	})
+	    }
+       	}
 
     </script>
     <style type="text/css">
@@ -54,9 +54,9 @@
             background-color: #EFEFEF;
             color: #099FDE;
             font-size: 16px;
-			word-break: break-all;
-			overflow: hidden;
-			border-radius: 5px;
+            word-break: break-all;
+            overflow: hidden;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -66,12 +66,11 @@
       <div class="moudle_list_item" id="btn1" onclick="openAppScanPage()" >扫码测试 </div>
       <div class="moudle_list_item" id="btn2" onclick="getGpsLoc()" >获取定位信息</div>
       <div id="btn2_1" ></div>
-
      </div>
     </div>
 
 </body>
 
 
-
 </html>
+
