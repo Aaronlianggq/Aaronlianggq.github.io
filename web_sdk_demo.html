@@ -9,24 +9,28 @@
     <script language="javascript">
 
         function openAppScanPage() {
-            dfwAppclass.DFWScan.appOpenScan(function(respData){
-                console.log(respData)
-            });
+            if (window.dfwAppclass) {
+                dfwAppclass.DFWScan.appOpenScan(function(respData){
+                    console.log(respData)
+                });
+            }
 	}
 
+	    
         function getGpsLoc(){
-            dfwAppclass.DFWLocation.appGetGpsLoc(function(respData){
-                var infoStr = JSON.stringify(respData)
-		let data = infoStr["data"]
-		let lat = data["latitude"]
-		let lon = data["longitude"]
-		if (lat != "" && lon != "") {
-		    document.getElementById('btn2').innerHTML = "获取定位信息： 经度_" + lon + "维度_" + lat
-		else {
-		    document.getElementById('btn2').innerHTML = "获取定位失败"
-		}
-                console.log(infoStr)
-            })
+	   if (window.dfwAppclass) {
+		   dfwAppclass.DFWLocation.appGetGpsLoc(function(respData){
+                  lwt infoStr = JSON.stringify(respData)
+		  let lat = data["latitude"]
+		  let lon = data["longitude"]
+		   if (lat != "" && lon != "") {
+			 document.getElementById('btn2').innerHTML = "获取定位信息： 经度_" + lon + "维度_" + lat
+		   else {
+			 document.getElementById('btn2').innerHTML = "获取定位失败"
+		   }
+			 console.log(infoStr)
+		   })
+	    }
 	}
 
     </script>
