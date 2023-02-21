@@ -12,16 +12,24 @@
             dfwAppclass.DFWScan.appOpenScan(function(respData){
                 console.log(respData)
             });
-		}
+	}
 
         function getGpsLoc(){
             dfwAppclass.DFWLocation.appGetGpsLoc(function(respData){
                 var infoStr = JSON.stringify(respData)
+		let data = infoStr["data"]
+		let lat = data["latitude"]
+		let lon = data["longitude"]
+		if (lat != "" && lon != "") {
+		    document.getElementById('btn2').innerHTML = "获取定位信息： 经度_" + lon + "维度_" + lat
+		else {
+		    document.getElementById('btn2').innerHTML = "获取定位失败"
+		}
                 console.log(infoStr)
             })
-		}
+	}
 
-	</script>
+    </script>
     <style type="text/css">
         body {
             background-color: #ffffff;
@@ -54,8 +62,10 @@
      <div class="moudle_list"> demo演示
       <div class="moudle_list_item" id="btn1" onclick="openAppScanPage()" >扫码测试 </div>
       <div class="moudle_list_item" id="btn2" onclick="getGpsLoc()" >获取定位信息</div>
-	 </div>
-	</div>
+      <div id="btn2_1" ></div>
+
+     </div>
+    </div>
 
 </body>
 
