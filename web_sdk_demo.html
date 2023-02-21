@@ -18,20 +18,19 @@
 
 	    
         function getGpsLoc(){
-	   if (window.dfwAppclass) {
-	       dfwAppclass.DFWLocation.appGetGpsLoc(function(respData){
-		       let infoStr = JSON.stringify(respData)
-		       let lat = data["latitude"]
-		       let lon = data["longitude"]
-		       if (lat != "" && lon != "") {
-			   document.getElementById('btn2').innerHTML = "获取定位信息： 经度_" + lon + "维度_" + lat
-		       else {
-			   document.getElementById('btn2').innerHTML = "获取定位失败"
-		       }
-		       console.log(infoStr)
-	       })
-	    }
-	}
+            if (window.dfwAppclass) {
+                dfwAppclass.DFWLocation.appGetGpsLoc(function(respData){
+                    let infoStr = JSON.stringify(respData)
+                    let lat = data["latitude"]
+                    let lon = data["longitude"]
+                    if (lat != "" && lon != "") {
+                        document.getElementById('btn2').innerHTML = "获取定位信息： 经度_" + lon + "维度_" + lat
+                    }else {
+                        document.getElementById('btn2').innerHTML = "获取定位失败"
+                    }
+                })
+            }
+        }
 
     </script>
     <style type="text/css">
